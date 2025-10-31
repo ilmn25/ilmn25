@@ -30,6 +30,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/ilmn25/",
               "budgets": [
                 {
                   "type": "initial",
