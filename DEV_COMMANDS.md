@@ -5,3 +5,4 @@
 | `npm run build`                                     | Build local                        |
 | `npx angular-cli-ghpages --dir=dist/ilmn25/browser` | Deploy (need to build local first) | 
 | `npm start`                                         | Run dev server                     |
+| `ng generate component [title]`                     | generate page for router           |
