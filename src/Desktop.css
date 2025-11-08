@@ -1,0 +1,21 @@
+﻿.desktop {
+    margin: 0;
+    padding: 0;
+    background-image: url('public/bg.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.desktop-apps {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: 5%;
+    width: 70%;
+}
+
+.white-font {
+    color: white;
+}
