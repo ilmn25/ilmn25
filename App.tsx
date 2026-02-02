@@ -1,8 +1,6 @@
-
 import React from 'react';
 import Navbar from './components/Navbar';
 import ProjectCard from './components/ProjectCard';
-import ChatAssistant from './components/ChatAssistant';
 import { PERSONAL_INFO, PROJECTS, SKILLS, EXPERIENCES } from './constants';
 
 const App: React.FC = () => {
@@ -146,9 +144,6 @@ const App: React.FC = () => {
           </p>
         </div>
       </footer>
-
-      {/* Interactive AI Assistant */}
-      <ChatAssistant />
     </div>
   );
 };
