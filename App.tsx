@@ -42,7 +42,6 @@ const App: React.FC = () => {
           {/* Left Column: Personal Info */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="w-40 h-40 rounded-full mb-8 shadow-2xl shadow-slate-200 bg-slate-100 border-4 border-white flex items-center justify-center overflow-hidden">
-               <svg className="w-20 h-20 text-slate-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
             </div>
             
             <h1 className="text-4xl md:text-5xl font-extrabold mb-2 text-slate-900">
@@ -55,7 +54,15 @@ const App: React.FC = () => {
 
             <div className="max-w-xl text-slate-600 text-lg mb-8 space-y-1 leading-relaxed font-mono">
               <p>{PERSONAL_INFO.title}</p>
-              <p>{PERSONAL_INFO.education}</p>
+              {(() => {
+                const parts = PERSONAL_INFO.education.split(' @ ');
+                return (
+                  <div>
+                    <p>{parts[0]}</p>
+                    {parts[1] && <p>@ {parts[1]}</p>}
+                  </div>
+                )
+              })()}
             </div>
 
             <div className="flex items-center gap-4">
@@ -96,7 +103,7 @@ const App: React.FC = () => {
             <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">About</h2>
             <div className="h-1 w-20 bg-slate-900 mx-auto rounded-full"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {SKILLS.map((group, i) => (
               <div key={i} className="p-8 rounded-3xl bg-white border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-500/5 hover:-translate-y-1">
                 <h3 className="text-slate-900 font-bold text-lg mb-6 uppercase tracking-wider border-b border-slate-100 pb-2">{group.category}</h3>
@@ -121,11 +128,6 @@ const App: React.FC = () => {
               <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">Featured Work</h2>
               <p className="text-slate-500 leading-relaxed font-medium">A selection of my technical and creative ventures.</p>
             </div>
-            <div className="flex gap-2">
-               <span className="px-4 py-1.5 rounded-full border border-slate-200 text-xs font-bold text-slate-700 uppercase tracking-widest bg-slate-50">
-                 Curated Portfolio
-               </span>
-            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
@@ -144,8 +146,22 @@ const App: React.FC = () => {
             {EXPERIENCES.map((exp, i) => (
               <div key={i} className="relative pl-12">
                 <div className="absolute left-[-9px] top-1 w-4 h-4 rounded-full bg-slate-900 border-4 border-white"></div>
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-500/5 hover:-translate-y-1">
-                  <span className="text-slate-400 font-mono text-sm mb-2 block">{exp.period}</span>
+                <div className="relative bg-white p-6 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-500/5 hover:-translate-y-1">
+                  {exp.type && (
+                    <span className="absolute top-6 right-6 bg-slate-50 text-slate-600 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-slate-200">
+                      {exp.type}
+                    </span>
+                  )}
+                  <span className="text-slate-400 font-mono text-sm mb-2 block">
+                    {exp.period.includes('Present') ? (
+                      <>
+                        {exp.period.split('Present')[0]}
+                        <span className="text-green-500 font-bold animate-pulse">Present</span>
+                      </>
+                    ) : (
+                      exp.period
+                    )}
+                  </span>
                   <h3 className="text-xl font-bold text-slate-900 mb-1">{exp.role}</h3>
                   <p className="text-slate-600 font-semibold mb-4 leading-normal">{exp.company}</p>
                   <ul className="space-y-2">
@@ -167,6 +183,7 @@ const App: React.FC = () => {
       <footer className="py-12 border-t border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-400 text-sm font-mono mt-8 leading-relaxed">
+            {/* Fix: Use new Date() instead of new Year() to get the current year. */}
             &copy; {new Date().getFullYear()} illu. Built with <span className="text-slate-900 font-bold">React</span> & <span className="text-slate-900 font-bold">Tailwind</span>.
           </p>
         </div>

@@ -30,7 +30,8 @@ const ChatAssistant: React.FC = () => {
     setIsLoading(false);
   };
 
-  const toggleChat = (e: React.MouseEvent) => {
+  // Fix: Specify the event target type as HTMLButtonElement to access the 'blur' method.
+  const toggleChat = (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsOpen(!isOpen);
     e.currentTarget.blur();
   };

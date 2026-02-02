@@ -18,6 +18,7 @@ export interface Experience {
   role: string;
   period: string;
   description: string[];
+  type?: 'Full-time' | 'Part-time' | 'Freelance';
 }
 
 export interface SkillGroup {
