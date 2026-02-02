@@ -7,11 +7,15 @@ export const PERSONAL_INFO = {
   decoration: "+-= ═.·:·.☽ ✧  ✦  ✧ ☾.·:·.═ =-+",
   contact: {
     whatsapp: '+852 6236 5318',
-    email: 'kilmn025@gmail.com'
+    email: 'kilmn025@gmail.com',
+    discord: 'ilmn'
   },
   social: {
     github: 'https://github.com/ilmn25',
-    twitter: 'https://x.com/ilmn25/'
+    twitter: 'https://x.com/ilmn25/',
+    instagram: 'https://www.instagram.com/ilmnnnnnnnnnn/',
+    vgen: 'https://vgen.co/ilmn25/portfolio',
+    linkedin: 'https://www.linkedin.com/in/ilmn25/'
   }
 };
 
