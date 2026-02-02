@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import ProjectCard from './components/ProjectCard';
-import ChatAssistant from './components/ChatAssistant';
+import ContactModal from './components/ContactModal';
 import { PERSONAL_INFO, PROJECTS, SKILLS, EXPERIENCES } from './constants';
 
 const App: React.FC = () => {
   const [copied, setCopied] = useState<string | null>(null);
+  const [isContactModalOpen, setContactModalOpen] = useState(false);
   const heroBtnClass = "w-full md:w-64 px-8 py-3 bg-slate-900 hover:bg-black text-white rounded-full font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 hover:-translate-y-0.5 shadow-lg shadow-slate-200 text-center block cursor-pointer outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2";
   const socialIconClass = "relative p-3 bg-white hover:bg-slate-50 rounded-full transition-all duration-200 border border-slate-200 text-slate-900 hover:shadow-md active:scale-95 group";
 
@@ -47,7 +48,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen text-slate-900">
-      <Navbar scrollToSection={scrollToSection} />
+      <Navbar scrollToSection={scrollToSection} onContactClick={() => setContactModalOpen(true)} />
       
       {/* Hero Section */}
       <header id="hero" className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100/30">
@@ -66,6 +67,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="max-w-xl text-slate-600 text-lg mb-8 space-y-1 leading-relaxed font-mono">
+              <p>{PERSONAL_INFO.birthday}</p>
               <p>{PERSONAL_INFO.title}</p>
               {(() => {
                 const parts = PERSONAL_INFO.education.split(' @ ');
@@ -114,11 +116,11 @@ const App: React.FC = () => {
 
           {/* Right Column: Navigation and Actions */}
           <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-4 w-full md:w-auto">
-            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className={heroBtnClass} aria-label="Go to About Section">
-              About
+            <a href="#skills" onClick={(e) => scrollToSection(e, 'skills')} className={heroBtnClass} aria-label="Go to Skills Section">
+              Skills
             </a>
-            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className={heroBtnClass} aria-label="Go to Featured Work Section">
-              Featured work
+            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className={heroBtnClass} aria-label="Go to Projects Section">
+              Projects
             </a>
             <a href="#experience" onClick={(e) => scrollToSection(e, 'experience')} className={heroBtnClass} aria-label="Go to Work Experience Section">
               Work Experience
@@ -130,11 +132,11 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-slate-50 scroll-mt-20">
+      {/* Skills Section */}
+      <section id="skills" className="py-20 bg-slate-50 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">About</h2>
+            <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">Skills</h2>
             <div className="h-1 w-20 bg-slate-900 mx-auto rounded-full"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -154,12 +156,12 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Work Section */}
+      {/* Projects Section */}
       <section id="projects" className="py-20 px-4 scroll-mt-20">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
             <div>
-              <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">Featured Work</h2>
+              <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">Projects</h2>
               <p className="text-slate-500 leading-relaxed font-medium">A selection of my technical and creative ventures.</p>
             </div>
           </div>
@@ -212,17 +214,18 @@ const App: React.FC = () => {
           </div>
         </div>
       </section>
+      
+      <ContactModal isOpen={isContactModalOpen} onClose={() => setContactModalOpen(false)} />
 
       {/* Footer */}
       <footer className="py-12 border-t border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-400 text-sm font-mono mt-8 leading-relaxed">
             {/* Fix: Use new Date() instead of new Year() to get the current year. */}
-            &copy; {new Date().getFullYear()} illu. Built with <span className="text-slate-900 font-bold">React</span> & <span className="text-slate-900 font-bold">Tailwind</span>.
+            &copy; {new Date().getFullYear()} illu.
           </p>
         </div>
       </footer>
-      <ChatAssistant />
     </div>
   );
 };
