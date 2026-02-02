@@ -2,8 +2,9 @@ import { Project, Experience, SkillGroup } from './types';
 
 export const PERSONAL_INFO = {
   name: 'illu',
-  title: 'CS Student @ PolyU HK | Software Engineer | Technical Artist',
-  education: "Bachelor's degree in Computer Science + Japanese Minor @ PolyU HK (3rd Year)",
+  title: 'CS Student | Full stack developer | Game developer | Digital illustrator',
+  education: "Bachelor's degree in Computer Science, Minor in Japanese @ PolyU HK (3rd Year)",
+  decoration: "+-= ═.·:·.☽ ✧  ✦  ✧ ☾.·:·.═ =-+",
   contact: {
     whatsapp: '+852 6236 5318',
     email: 'kilmn025@gmail.com'
@@ -116,8 +117,8 @@ export const EXPERIENCES: Experience[] = [
     ]
   },
   {
-    company: 'Freelance Digital Artist',
-    role: 'Illustrator & Animator',
+    company: 'Freelance',
+    role: 'Digital Illustrator',
     period: 'Jan 2023 - Present',
     description: [
       'Managed digital illustration commissions for international clients.',
