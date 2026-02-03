@@ -1,3 +1,4 @@
+
 import { Project, Experience, SkillGroup } from './types';
 
 export const PERSONAL_INFO = {
@@ -59,13 +60,15 @@ export const PROJECTS: Project[] = [
   {
     id: 'unity-game',
     title: '3D Unity Game',
-    description: 'A robust 3D game project built on Unity focusing on performance and complex systems.',
+    description: 'A work-in-progress survival game project built during my summer breaks.',
     category: 'game',
     tags: ['Unity', 'C#'],
     highlights: [
       'Cubic map chunking system',
       'State machine and behavior module system',
-      "Optimized real-time map generation using Unity's Job System"
+      "Optimized real-time map generation using Unity's Job System",
+      'Robust 3D A* pathfinding algorithm with parkour',
+      'runs at 300 fps on a mid-tier laptop'
     ],
     links: [
       { label: 'Source Code', url: 'https://github.com/ilmn25/240809' },
@@ -76,7 +79,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'discord-tool',
     title: 'Automated Discord Message Tool',
-    description: 'A cloud-native solution for automating job post distribution across Discord communities.',
+    description: 'A cloud-native web app for streamlining job posts across many channels on Discord.',
     category: 'web',
     tags: ['FastAPI', 'React', 'AWS', 'Docker', 'MongoDB', 'Tailwind', 'GitHub Actions'],
     highlights: [
@@ -92,13 +95,14 @@ export const PROJECTS: Project[] = [
   {
     id: 'tutor-db',
     title: 'Tutor Centre Management System',
-    description: 'A bespoke full-stack attendance and bookings web application for the centre, built to streamline complex staff workflows and parent interactions.',
+    description: 'A full-stack service web app, built to streamline attendance and bookings data handling for small tutor centres.',
     category: 'web',
     tags: ['Supabase', 'PostgreSQL', 'React', 'Tailwind'],
     highlights: [
       'Built with Supabase/PostgreSQL backend and Vite React + Tailwind frontend',
       'Features localization, multi-tenancy, and an interactive dashboard for parents',
-      'Advanced data management: batch Excel importing, robust filtering and sorting, and database rollback systems'
+      'Advanced data management: batch Excel importing, robust filtering and sorting, and database rollback systems',
+      'used by a tutor centre in Hung Hom'
     ],
     links: [
       { label: 'Website', url: 'https://ilmn25.github.io/260131-web/#/' }
@@ -107,7 +111,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'digital-art',
     title: 'Digital Illustration',
-    description: 'A professional creative portfolio showcasing high-quality character design, 2D animation, and digital illustration.',
+    description: 'A collection of my illustrations, animations, and other art.',
     category: 'art',
     tags: ['Clip Studio Paint', 'Character Design', 'Animation', 'Video Editing'],
     highlights: [
