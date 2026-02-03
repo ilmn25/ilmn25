@@ -2,7 +2,7 @@ import { Project, Experience, SkillGroup } from './types';
 
 export const PERSONAL_INFO = {
   name: 'illu',
-  title: 'CS Student | Full stack developer | Game developer | Digital illustrator',
+  title: 'Full stack developer | Game developer | Digital illustrator',
   education: "BSc (Hons) in Computer Science + Minor in Japanese @ The Hong Kong Polytechnic University Sep 2023 – Jul 2027",
   birthday: '20/05/2005',
   decoration: "+-= ═.·:·.☽ ✧  ✦  ✧ ☾.·:·.═ =-+",
@@ -51,7 +51,7 @@ export const SKILLS: SkillGroup[] = [
   },
   {
     category: 'Graphics & Design',
-    skills: ['Clip Studio Paint', 'Figma']
+    skills: ['Clip Studio Paint', 'Figma', 'Canvas']
   }
 ];
 
@@ -92,13 +92,13 @@ export const PROJECTS: Project[] = [
   {
     id: 'tutor-db',
     title: 'Tutor Centre Management System',
-    description: 'Custom database management system commissioned for a tutoring centre in Hung Hom.',
+    description: 'A bespoke full-stack attendance and bookings web application for the centre, built to streamline complex staff workflows and parent interactions.',
     category: 'web',
-    tags: ['Supabase', 'PostgreSQL', 'React', 'GitHub Actions'],
+    tags: ['Supabase', 'PostgreSQL', 'React', 'Tailwind'],
     highlights: [
-      'Full-stack management of student/tutor records',
-      'Supabase backend for real-time updates',
-      'Optimized PostgreSQL schema for scheduling'
+      'Built with Supabase/PostgreSQL backend and Vite React + Tailwind frontend',
+      'Features localization, multi-tenancy, and an interactive dashboard for parents',
+      'Advanced data management: batch Excel importing, robust filtering and sorting, and database rollback systems'
     ],
     links: [
       { label: 'Website', url: 'https://ilmn25.github.io/260131-web/#/' }
@@ -106,14 +106,14 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'digital-art',
-    title: 'Digital Illustrations',
-    description: 'A collection of digital artworks created over 6+ years.',
+    title: 'Digital Illustration',
+    description: 'A professional creative portfolio showcasing high-quality character design, 2D animation, and digital illustration.',
     category: 'art',
-    tags: ['Clip Studio Paint', 'Character Design'],
+    tags: ['Clip Studio Paint', 'Character Design', 'Animation', 'Video Editing'],
     highlights: [
-      'Freelance illustration commissions for online clients since 2023',
-      'Consistent output across Instagram, Twitter, and YouTube',
-      'Proficiency in Huion hardware and CSP software'
+      'Specializing in high-quality character design, illustration, and concept sketches tailored to client specifications',
+      'Proficiency in 2D animation and creative video editing for social media outreach',
+      'Managing social media presence and freelance commissions via Discord with iterative feedback cycles'
     ],
     links: [
       { label: 'Twitter', url: 'https://x.com/ilmn25/' },
@@ -125,25 +125,26 @@ export const PROJECTS: Project[] = [
 
 export const EXPERIENCES: Experience[] = [
   {
-    company: 'Time Super English (Hung Hom)',
-    role: 'Full Stack Developer',
+    company: 'Time Super English Tutor Centre',
+    role: 'Full Stack Webapp Developer',
     period: 'Jan 2026 - Present',
     type: 'Part-time',
     description: [
-      'Commissioned to design and develop a full-stack management system for student and tutor records.',
-      'Utilized Supabase and PostgreSQL for a real-time database with an optimized schema for efficient scheduling.',
-      "Delivered a custom solution tailored to the centre's operational needs."
+      'Sole developer of a custom attendance and bookings web app for the centre, built with Supabase/PostgreSQL backend and Vite React + Tailwind frontend.',
+      'Iterated features through direct collaboration with staff and owner to match their workflows and design.',
+      'Features including localization, multi-tenancy, a dashboard for parents, extremely robust filtering and sorting, batch importing bookings data from excel, database snapshots and rollback, and more.'
     ]
   },
   {
-    company: 'All Walks AWIL',
-    role: 'Game Developer Intern',
+    company: 'All Walks Limited',
+    role: 'Unity Game Development Intern',
     period: 'Dec 2025 - Jan 2026',
     type: 'Full-time',
     description: [
-      'Developed and integrated localization and gameplay core sections.',
-      'Worked with senior developers to plan app framework improvements.',
-      'Implemented UI/UX settings within the existing codebase.'
+      'Worked on a to-be-released game focused on mental health education.',
+      'Developed and integrated core app sections within the existing framework and codebase including settings, localization, Excel to C# pipeline for constants, and gameplay.',
+      'Collaborated directly with the director and senior developer to plan, prioritize, and deliver upcoming tasks, while writing and reviewing project specifications to guide development of new app features.',
+      'Contributed expertise to resolve animation and graphic design issues, ensuring smoother visuals and consistent user experience.'
     ]
   },
   {
@@ -152,9 +153,9 @@ export const EXPERIENCES: Experience[] = [
     period: 'Jan 2023 - Present',
     type: 'Freelance',
     description: [
-      'Managed digital illustration commissions for international clients.',
-      'Developed a following across multiple creative platforms.',
-      'Specialized in character art and social media content.'
+      'Reached potential clients on social media platforms such as Discord by posting and sharing my art portfolio.',
+      'Drew high quality concept sketches and character art tailored to client specifications.',
+      'Maintained clear communication with clients through iterative feedback cycles, and delivered projects within agreed timelines, ensuring satisfaction.'
     ]
   }
 ];
