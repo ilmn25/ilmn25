@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import ProjectCard from './components/ProjectCard';
@@ -7,7 +8,7 @@ import { PERSONAL_INFO, PROJECTS, SKILLS, EXPERIENCES } from './constants';
 const App: React.FC = () => {
   const [copied, setCopied] = useState<string | null>(null);
   const [isContactModalOpen, setContactModalOpen] = useState(false);
-  const heroBtnClass = "w-full md:w-64 px-8 py-3 bg-slate-900 hover:bg-black text-white rounded-full font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 hover:-translate-y-0.5 shadow-lg shadow-slate-200 text-center block cursor-pointer outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2";
+  const heroBtnClass = "w-64 px-8 py-3 bg-slate-900 hover:bg-black text-white rounded-full font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 hover:-translate-y-0.5 shadow-lg shadow-slate-200 text-center block cursor-pointer outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2";
   const socialIconClass = "relative p-3 bg-white hover:bg-slate-50 rounded-full transition-all duration-200 border border-slate-200 text-slate-900 hover:shadow-md active:scale-95 group";
 
 
@@ -55,7 +56,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Left Column: Personal Info */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <div className="w-40 h-40 rounded-full mb-8 shadow-2xl shadow-slate-200 bg-slate-100 border-4 border-white flex items-center justify-center overflow-hidden">
+            <div className="w-40 h-40 rounded-full mb-8 shadow-2xl shadow-slate-200 bg-slate-100 flex items-center justify-center overflow-hidden">
               <img 
                 src="https://cdn.discordapp.com/attachments/643815263648612359/1468158189009633394/ca_blue.png?ex=6983005d&is=6981aedd&hm=895d1d4117ba944b36bc497368ae5318e9a3bce8289874d02245a2d9028b368c&" 
                 alt="illu" 
@@ -64,14 +65,14 @@ const App: React.FC = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-extrabold mb-2 text-slate-900">
-              illu <span className="text-slate-500 text-xl md:text-2xl font-mono font-normal ml-2">@ilmn25</span>
+              illu <span className="text-slate-500 text-lg md:text-xl font-mono font-normal ml-2">@ilmn25</span>
             </h1>
 
-            <div className="text-slate-400 font-mono mb-4 text-sm md:text-base tracking-widest overflow-hidden whitespace-nowrap">
+            <div className="text-slate-400 font-mono mb-4 text-xs md:text-sm tracking-widest overflow-hidden whitespace-nowrap">
               {(PERSONAL_INFO as any).decoration}
             </div>
 
-            <div className="max-w-xl text-slate-600 text-lg mb-8 space-y-1 leading-relaxed font-mono">
+            <div className="max-w-xl text-slate-600 text-base mb-8 space-y-1 leading-relaxed font-mono">
               <p>{PERSONAL_INFO.birthday}</p>
               <p>{PERSONAL_INFO.title}</p>
               {(() => {
@@ -121,39 +122,18 @@ const App: React.FC = () => {
 
           {/* Right Column: Navigation and Actions */}
           <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-4 w-full md:w-auto">
-            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className={heroBtnClass} aria-label="Go to About Section">
-              About
-            </a>
             <a href="#skills" onClick={(e) => scrollToSection(e, 'skills')} className={heroBtnClass} aria-label="Go to Skills Section">
               Skills
-            </a>
-            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className={heroBtnClass} aria-label="Go to Projects Section">
-              Projects
             </a>
             <a href="#experience" onClick={(e) => scrollToSection(e, 'experience')} className={heroBtnClass} aria-label="Go to Work Experience Section">
               Work Experience
             </a>
+            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className={heroBtnClass} aria-label="Go to Projects Section">
+              Projects
+            </a>
           </div>
         </div>
       </header>
-
-      {/* About Section */}
-      <section id="about" className="py-20 bg-white scroll-mt-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-8 text-slate-900 uppercase tracking-widest">About Me</h2>
-          <div className="space-y-6 text-lg text-slate-600 leading-relaxed font-medium">
-            <p>
-              I'm a 3rd year computer science student in PolyU, who has experience in full-stack web development, game development, and graphic design. I am fluent in both Chinese and English.
-            </p>
-            <p>
-              I’m a person who is eager to learn, open minded, and has high aspirations. I have a broad and strong set of skills, and is always working hard to improve and expand them.
-            </p>
-            <p>
-              I have multiple full stack SaaS projects with complex database schemas, cloud-hosted backend, and robust features. One of which, a student attendance and bookings system, is actively used by a tutor centre in Hung Hom.
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* Skills Section */}
       <section id="skills" className="py-20 bg-slate-50 scroll-mt-20">
@@ -172,6 +152,49 @@ const App: React.FC = () => {
                       {skill}
                     </span>
                   ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Work Experience Section */}
+      <section id="experience" className="py-20 bg-slate-50 scroll-mt-20">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-12 text-center text-slate-900 uppercase tracking-widest">Work Experience</h2>
+          <div className="relative border-l-2 border-slate-200 ml-4 space-y-12">
+            {EXPERIENCES.map((exp, i) => (
+              <div key={i} className="relative pl-12">
+                <div className="absolute left-[-9px] top-1 w-4 h-4 rounded-full bg-slate-900 border-4 border-white"></div>
+                <div className="relative bg-white p-6 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-500/5 hover:-translate-y-1">
+                  <div className="flex justify-between items-start gap-4 mb-2">
+                    <span className="text-slate-400 font-mono text-sm">
+                      {exp.period.includes('Present') ? (
+                        <>
+                          {exp.period.split('Present')[0]}
+                          <span className="text-green-500 font-bold animate-pulse">Present</span>
+                        </>
+                      ) : (
+                        exp.period
+                      )}
+                    </span>
+                    {exp.type && (
+                      <span className="shrink-0 bg-slate-50 text-slate-600 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-slate-200">
+                        {exp.type}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">{exp.role}</h3>
+                  <p className="text-slate-600 font-semibold mb-4 leading-normal">{exp.company}</p>
+                  <ul className="space-y-2">
+                    {exp.description.map((item, j) => (
+                      <li key={j} className="text-slate-600 text-sm flex gap-2 leading-relaxed">
+                        <span className="text-slate-900 font-bold">•</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}
@@ -197,47 +220,6 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Work Experience Section */}
-      <section id="experience" className="py-20 bg-slate-50 scroll-mt-20">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center text-slate-900 uppercase tracking-widest">Work Experience</h2>
-          <div className="relative border-l-2 border-slate-200 ml-4 space-y-12">
-            {EXPERIENCES.map((exp, i) => (
-              <div key={i} className="relative pl-12">
-                <div className="absolute left-[-9px] top-1 w-4 h-4 rounded-full bg-slate-900 border-4 border-white"></div>
-                <div className="relative bg-white p-6 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-500/5 hover:-translate-y-1">
-                  {exp.type && (
-                    <span className="absolute top-6 right-6 bg-slate-50 text-slate-600 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-slate-200">
-                      {exp.type}
-                    </span>
-                  )}
-                  <span className="text-slate-400 font-mono text-sm mb-2 block">
-                    {exp.period.includes('Present') ? (
-                      <>
-                        {exp.period.split('Present')[0]}
-                        <span className="text-green-500 font-bold animate-pulse">Present</span>
-                      </>
-                    ) : (
-                      exp.period
-                    )}
-                  </span>
-                  <h3 className="text-xl font-bold text-slate-900 mb-1">{exp.role}</h3>
-                  <p className="text-slate-600 font-semibold mb-4 leading-normal">{exp.company}</p>
-                  <ul className="space-y-2">
-                    {exp.description.map((item, j) => (
-                      <li key={j} className="text-slate-600 text-sm flex gap-2 leading-relaxed">
-                        <span className="text-slate-900 font-bold">•</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      
       <ContactModal isOpen={isContactModalOpen} onClose={() => setContactModalOpen(false)} />
 
       {/* Footer */}
