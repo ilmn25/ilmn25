@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Project } from '../types';
 
@@ -27,7 +28,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
       </div>
       
-      <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-slate-700 transition-colors">
+      <h3 className="text-lg md:text-xl font-bold mb-3 text-slate-900 group-hover:text-slate-700 transition-colors hyphens-auto">
         {project.title}
       </h3>
       <p className="text-slate-500 text-base mb-8 flex-grow leading-relaxed">

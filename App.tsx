@@ -205,11 +205,9 @@ const App: React.FC = () => {
       {/* Projects Section */}
       <section id="projects" className="py-20 px-4 scroll-mt-20">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
-            <div>
-              <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">Projects</h2>
-              <p className="text-slate-500 leading-relaxed font-medium">Featured Software, Game and Illustration Projects</p>
-            </div>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">Projects</h2>
+            <div className="h-1 w-20 bg-slate-900 mx-auto rounded-full"></div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
