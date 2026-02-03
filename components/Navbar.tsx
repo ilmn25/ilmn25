@@ -22,6 +22,13 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, onContactClick }) => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               <a 
+                href="#about" 
+                onClick={(e) => scrollToSection(e, 'about')} 
+                className="text-slate-600 hover:text-slate-900 px-4 py-2 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+              >
+                About
+              </a>
+              <a 
                 href="#skills" 
                 onClick={(e) => scrollToSection(e, 'skills')} 
                 className="text-slate-600 hover:text-slate-900 px-4 py-2 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 active:scale-95"

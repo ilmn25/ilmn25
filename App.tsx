@@ -116,6 +116,9 @@ const App: React.FC = () => {
 
           {/* Right Column: Navigation and Actions */}
           <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-4 w-full md:w-auto">
+            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className={heroBtnClass} aria-label="Go to About Section">
+              About
+            </a>
             <a href="#skills" onClick={(e) => scrollToSection(e, 'skills')} className={heroBtnClass} aria-label="Go to Skills Section">
               Skills
             </a>
@@ -125,12 +128,27 @@ const App: React.FC = () => {
             <a href="#experience" onClick={(e) => scrollToSection(e, 'experience')} className={heroBtnClass} aria-label="Go to Work Experience Section">
               Work Experience
             </a>
-            <a href="https://vgen.co/ilmn25/portfolio" target="_blank" rel="noopener noreferrer" className={heroBtnClass} aria-label="Go to Digital Illustration Section">
-              Digital illustration
-            </a>
           </div>
         </div>
       </header>
+
+      {/* About Section */}
+      <section id="about" className="py-20 bg-white scroll-mt-20">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-8 text-slate-900 uppercase tracking-widest">About Me</h2>
+          <div className="space-y-6 text-lg text-slate-600 leading-relaxed font-medium">
+            <p>
+              I'm a 3rd year computer science student in PolyU, who has experience in full-stack web development, game development, and graphic design. I am fluent in both Chinese and English.
+            </p>
+            <p>
+              I’m a person who is eager to learn, open minded, and has high aspirations. I have a broad and strong set of skills, and is always working hard to improve and expand them.
+            </p>
+            <p>
+              I have multiple full stack SaaS projects with complex database schemas, cloud-hosted backend, and robust features. One of which, a student attendance and bookings system, is actively used by a tutor centre in Hung Hom.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Skills Section */}
       <section id="skills" className="py-20 bg-slate-50 scroll-mt-20">
@@ -162,7 +180,7 @@ const App: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
             <div>
               <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">Projects</h2>
-              <p className="text-slate-500 leading-relaxed font-medium">A selection of my technical and creative ventures.</p>
+              <p className="text-slate-500 leading-relaxed font-medium">Featured Software, Game and Illustration Projects</p>
             </div>
           </div>
           
@@ -221,7 +239,6 @@ const App: React.FC = () => {
       <footer className="py-12 border-t border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-400 text-sm font-mono mt-8 leading-relaxed">
-            {/* Fix: Use new Date() instead of new Year() to get the current year. */}
             &copy; {new Date().getFullYear()} illu.
           </p>
         </div>
