@@ -58,7 +58,7 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="w-40 h-40 rounded-full mb-8 shadow-2xl shadow-slate-200 bg-slate-100 flex items-center justify-center overflow-hidden">
               <img 
-                src="https://cdn.discordapp.com/attachments/643815263648612359/1468158189009633394/ca_blue.png?ex=6983005d&is=6981aedd&hm=895d1d4117ba944b36bc497368ae5318e9a3bce8289874d02245a2d9028b368c&" 
+                src="https://cdn.discordapp.com/attachments/643815263648612359/1468534033670475999/image.png?ex=69845e65&is=69830ce5&hm=b62e01806920ec4c6153630294940cb96ce6ee063a198c77e2b4c453e447e397&" 
                 alt="illu" 
                 className="w-full h-full object-cover"
               />

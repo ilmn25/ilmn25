@@ -83,7 +83,7 @@ export const PROJECTS: Project[] = [
     category: 'web',
     tags: ['FastAPI', 'React', 'AWS', 'Docker', 'MongoDB', 'Tailwind', 'GitHub Actions'],
     highlights: [
-      'Wrapper for Discord API to automate job posts',
+      'Wrapper for Discord API',
       'Hosted on AWS ECS Fargate with Docker containerization',
       'Integrated CI/CD pipeline via GitHub Actions',
       'Multilingual UI localization'
@@ -115,9 +115,8 @@ export const PROJECTS: Project[] = [
     category: 'art',
     tags: ['Clip Studio Paint', 'Character Design', 'Animation', 'Video Editing'],
     highlights: [
-      'Specializing in high-quality character design, illustration, and concept sketches tailored to client specifications',
-      'Proficiency in 2D animation and creative video editing for social media outreach',
-      'Managing social media presence and freelance commissions via Discord with iterative feedback cycles'
+      'Drew character design, illustration, and concept sketches tailored to client specifications',
+      'Managing personal social media and freelance commissions'
     ],
     links: [
       { label: 'Twitter', url: 'https://x.com/ilmn25/' },
@@ -158,7 +157,7 @@ export const EXPERIENCES: Experience[] = [
     type: 'Freelance',
     description: [
       'Reached potential clients on social media platforms such as Discord by posting and sharing my art portfolio.',
-      'Drew high quality concept sketches and character art tailored to client specifications.',
+      'Drew concept sketches and character art tailored to client specifications.',
       'Maintained clear communication with clients through iterative feedback cycles, and delivered projects within agreed timelines, ensuring satisfaction.'
     ]
   }

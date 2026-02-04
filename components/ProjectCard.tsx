@@ -31,14 +31,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       <h3 className="text-lg md:text-xl font-bold mb-3 text-slate-900 group-hover:text-slate-700 transition-colors hyphens-auto">
         {project.title}
       </h3>
-      <p className="text-slate-500 text-base mb-8 flex-grow leading-relaxed">
+      <p className="text-slate-500 text-base mb-8 leading-relaxed">
         {project.description}
       </p>
 
       <div className="space-y-3 mb-8">
         {project.highlights.map((h, i) => (
           <div key={i} className="flex items-start gap-3 text-sm text-slate-600 leading-relaxed">
-            <span className="text-slate-900 mt-1 font-bold">›</span>
+            <span className="text-slate-900 font-bold">›</span>
             <span>{h}</span>
           </div>
         ))}
