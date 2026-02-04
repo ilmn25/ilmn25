@@ -121,7 +121,7 @@ const App: React.FC = () => {
           </div>
 
           {/* Right Column: Navigation and Actions */}
-          <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-5 w-full md:w-auto">
+          <div className="flex flex-col items-center md:items-end text-center md:text-right gap-5 w-full md:w-auto">
             <a href="#skills" onClick={(e) => scrollToSection(e, 'skills')} className={heroBtnClass} aria-label="Go to Skills Section">
               Skills
             </a>
