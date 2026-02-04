@@ -121,7 +121,7 @@ const App: React.FC = () => {
           </div>
 
           {/* Right Column: Navigation and Actions */}
-          <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-4 w-full md:w-auto">
+          <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-5 w-full md:w-auto">
             <a href="#skills" onClick={(e) => scrollToSection(e, 'skills')} className={heroBtnClass} aria-label="Go to Skills Section">
               Skills
             </a>
@@ -138,9 +138,8 @@ const App: React.FC = () => {
       {/* Skills Section */}
       <section id="skills" className="py-20 bg-slate-50 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">Skills</h2>
-            <div className="h-1 w-20 bg-slate-900 mx-auto rounded-full"></div>
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900">Skills</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {SKILLS.map((group, i) => (
@@ -162,7 +161,9 @@ const App: React.FC = () => {
       {/* Work Experience Section */}
       <section id="experience" className="py-20 bg-slate-50 scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center text-slate-900 uppercase tracking-widest">Work Experience</h2>
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900">Work Experience</h2>
+          </div>
           <div className="relative border-l-2 border-slate-200 ml-4 space-y-12">
             {EXPERIENCES.map((exp, i) => (
               <div key={i} className="relative pl-12">
@@ -205,9 +206,8 @@ const App: React.FC = () => {
       {/* Projects Section */}
       <section id="projects" className="py-20 px-4 scroll-mt-20">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-slate-900 uppercase tracking-widest">Projects</h2>
-            <div className="h-1 w-20 bg-slate-900 mx-auto rounded-full"></div>
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900">Featured Projects</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
