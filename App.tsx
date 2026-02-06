@@ -58,18 +58,18 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="w-40 h-40 rounded-full mb-8 shadow-2xl shadow-slate-200 bg-slate-100 flex items-center justify-center overflow-hidden">
               <img 
-                src="https://cdn.discordapp.com/attachments/643815263648612359/1468534033670475999/image.png?ex=69845e65&is=69830ce5&hm=b62e01806920ec4c6153630294940cb96ce6ee063a198c77e2b4c453e447e397&" 
-                alt="illu" 
+                src={(PERSONAL_INFO as any).avatar} 
+                alt={PERSONAL_INFO.name} 
                 className="w-full h-full object-cover"
               />
             </div>
             
             <h1 className="text-4xl md:text-5xl font-extrabold mb-2 text-slate-900">
-              illu <span className="text-slate-500 text-lg md:text-xl font-mono font-normal ml-2">@ilmn25</span>
+              {PERSONAL_INFO.name} <span className="text-slate-500 text-lg md:text-xl font-mono font-normal ml-2">@ilmn25</span>
             </h1>
 
             <div className="text-slate-400 font-mono mb-4 text-xs md:text-sm tracking-widest overflow-hidden whitespace-nowrap">
-              {(PERSONAL_INFO as any).decoration}
+              {PERSONAL_INFO.decoration}
             </div>
 
             <div className="max-w-xl text-slate-600 text-base mb-8 space-y-1 leading-relaxed font-mono">
@@ -224,7 +224,7 @@ const App: React.FC = () => {
       <footer className="py-12 border-t border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-400 text-sm font-mono mt-8 leading-relaxed">
-            &copy; {new Date().getFullYear()} illu.
+            &copy; {new Date().getFullYear()} {PERSONAL_INFO.name}.
           </p>
         </div>
       </footer>
