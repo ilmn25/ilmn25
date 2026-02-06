@@ -9,7 +9,7 @@ export interface Project {
     url: string;
     icon?: string;
   }[];
-  category: 'game' | 'web' | 'art';
+  category: 'game' | 'web' | 'art' | 'workflow';
   highlights: string[];
 }
 

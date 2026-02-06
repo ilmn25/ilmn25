@@ -1,8 +1,11 @@
 
 import { Project, Experience, SkillGroup } from './types';
 
+export const ASSETS_URL = "https://raw.githubusercontent.com/ilmn25/ilmn25/refs/heads/prod";
+
 export const PERSONAL_INFO = {
   name: 'illu',
+  avatar: `${ASSETS_URL}/pfp.png`,
   title: 'Full stack developer | Game developer | Digital illustrator',
   education: "BSc (Hons) in Computer Science + Minor in Japanese @ The Hong Kong Polytechnic University Sep 2023 – Jul 2027",
   birthday: '20/05/2005',
@@ -90,6 +93,21 @@ export const PROJECTS: Project[] = [
     ],
     links: [
       { label: 'Source Code', url: 'https://github.com/ilmn25/251128' }
+    ]
+  },
+  {
+    id: 'ai-studio-migration-workflow',
+    title: 'SPA HTML Tree Specification Generator',
+    description: 'A workflow tool that utilizes prompt engineering to analyze SPA HTML trees and output detailed website specifications for migration to Google AI Studio.',
+    category: 'workflow',
+    tags: ['Prompt Engineering', 'Specification Generation'],
+    highlights: [
+      'Processes SPA HTML trees to extract routes, page structure and asset details',
+      'Employs prompt engineering to generate clear, actionable specifications for migration',
+      'Facilitates the cleanup of asset names and paths for improved organization',
+      'Outputs a comprehensive specification document for easy migration into Google AI Studio'
+    ],
+    links: [  
     ]
   },
   {
