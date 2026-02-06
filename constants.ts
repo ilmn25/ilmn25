@@ -1,7 +1,7 @@
 
 import { Project, Experience, SkillGroup } from './types';
 
-export const ASSETS_URL = "https://raw.githubusercontent.com/ilmn25/ilmn25/refs/heads/prod";
+export const ASSETS_URL = "https://raw.githubusercontent.com/ilmn25/ilmn25/refs/heads/prod/assets";
 
 export const PERSONAL_INFO = {
   name: 'illu',
