@@ -10,13 +10,18 @@ import DiscordProjectPage from './components/DiscordProjectPage';
 import SpaTreeProjectPage from './components/SpaTreeProjectPage';
 import Preloader from './components/Preloader';
 import ScrollToTop from './components/ScrollToTop';
-import { PERSONAL_INFO, PROJECTS, SKILLS, EXPERIENCES } from './constants';
+import { PERSONAL_INFO, PROJECTS, SKILLS, EXPERIENCES, PROJECT_NAV } from './constants';
 import { 
   Github, 
   Linkedin, 
   Twitter, 
   Instagram, 
-  Palette
+  Palette,
+  Gamepad2,
+  Database,
+  Monitor,
+  Terminal,
+  ChevronRight
 } from 'lucide-react';
 
 type PortfolioView = 'portfolio' | 'illustrations' | 'unity-game' | 'tutor-db' | 'discord-tool' | 'spa-tree';
@@ -33,7 +38,6 @@ const App: React.FC = () => {
     e.preventDefault();
     if (view !== 'portfolio') {
       setView('portfolio');
-      // Delay scroll until component re-renders
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
@@ -64,7 +68,7 @@ const App: React.FC = () => {
   };
 
   const handleProjectClick = (projectId: string) => {
-    if (projectId === 'digital-art') {
+    if (projectId === 'digital-art' || projectId === 'illustrations') {
       setView('illustrations');
     } else if (projectId === 'unity-game') {
       setView('unity-game');
@@ -72,9 +76,10 @@ const App: React.FC = () => {
       setView('tutor-db');
     } else if (projectId === 'discord-tool') {
       setView('discord-tool');
-    } else if (projectId === 'ai-studio-migration-workflow') {
+    } else if (projectId === 'ai-studio-migration-workflow' || projectId === 'spa-tree') {
       setView('spa-tree');
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const renderView = () => {
@@ -94,6 +99,18 @@ const App: React.FC = () => {
     }
   };
 
+  const getProjectIcon = (id: string) => {
+    const iconProps = { className: "w-4 h-4" };
+    switch (id) {
+      case 'unity-game': return <Gamepad2 {...iconProps} />;
+      case 'tutor-db': return <Database {...iconProps} />;
+      case 'discord-tool': return <Monitor {...iconProps} />;
+      case 'spa-tree': return <Terminal {...iconProps} />;
+      case 'illustrations': return <Palette {...iconProps} />;
+      default: return <Monitor {...iconProps} />;
+    }
+  };
+
   if (!isLoaded) {
     return <Preloader onComplete={() => setIsLoaded(true)} />;
   }
@@ -101,7 +118,11 @@ const App: React.FC = () => {
   if (view !== 'portfolio') {
     return (
       <div className="min-h-screen text-slate-900 animate-fade-in">
-        <Navbar scrollToSection={scrollToSection} onContactClick={() => setContactModalOpen(true)} />
+        <Navbar 
+          scrollToSection={scrollToSection} 
+          onContactClick={() => setContactModalOpen(true)} 
+          onProjectClick={handleProjectClick}
+        />
         {renderView()}
         <ContactModal isOpen={isContactModalOpen} onClose={() => setContactModalOpen(false)} />
         <ScrollToTop />
@@ -118,7 +139,11 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen text-slate-900 animate-fade-in">
-      <Navbar scrollToSection={scrollToSection} onContactClick={() => setContactModalOpen(true)} />
+      <Navbar 
+        scrollToSection={scrollToSection} 
+        onContactClick={() => setContactModalOpen(true)} 
+        onProjectClick={handleProjectClick}
+      />
       
       {/* Hero Section */}
       <header id="hero" className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100/30">
@@ -143,19 +168,24 @@ const App: React.FC = () => {
 
             <div className="max-w-xl text-slate-600 text-base mb-8 space-y-1 leading-relaxed font-mono">
               <p>{PERSONAL_INFO.birthday}</p>
-              <p>{PERSONAL_INFO.title}</p>
-              {(() => {
-                const parts = PERSONAL_INFO.education.split(' @ ');
-                return (
-                  <div>
-                    <p>{parts[0]}</p>
-                    {parts[1] && <p>@ {parts[1]}</p>}
-                  </div>
-                )
-              })()}
+              <p>
+                Full stack developer | <br className="md:hidden" />
+                Game developer | <br className="md:hidden" />
+                Digital illustrator
+              </p>
+              <div>
+                <p>
+                  BSc (Hons) in Computer Science <br className="md:hidden" />
+                  + Minor in Japanese
+                </p>
+                <p>
+                  @ The Hong Kong Polytechnic University <br className="md:hidden" />
+                  Sep 2023 – Jul 2027
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-10">
               <a href={PERSONAL_INFO.social.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" className={socialIconClass}>
                 <Github className="w-6 h-6" />
               </a>
@@ -172,20 +202,27 @@ const App: React.FC = () => {
                 <Palette className="w-6 h-6" />
               </a>
             </div>
+
+            {/* Project Quick Nav Row */}
+            <div className="hidden md:flex flex-col items-start gap-3 w-full animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1 ml-1">Projects</p>
+              <div className="flex flex-wrap gap-3">
+                {PROJECT_NAV.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => handleProjectClick(item.id)}
+                    className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-100 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 hover:border-slate-300 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-slate-400 group-hover:text-slate-900 transition-colors">{getProjectIcon(item.id)}</span>
+                    {item.label}
+                    <ChevronRight className="w-3 h-3 text-slate-300 group-hover:translate-x-0.5 transition-transform" />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Right Column: Navigation and Actions */}
-          <div className="flex flex-col items-center md:items-end text-center md:text-right gap-5 w-full md:w-auto">
-            <a href="#skills" onClick={(e) => scrollToSection(e, 'skills')} className={heroBtnClass} aria-label="Go to Skills Section">
-              Skills
-            </a>
-            <a href="#experience" onClick={(e) => scrollToSection(e, 'experience')} className={heroBtnClass} aria-label="Go to Work Experience Section">
-              Work Experience
-            </a>
-            <a href="#projects" onClick={(e) => scrollToSection(e, 'projects')} className={heroBtnClass} aria-label="Go to Projects Section">
-              Projects
-            </a>
-          </div>
+          {/* Right Column: Blank as stylistic choice */} 
         </div>
       </header>
 

@@ -1,4 +1,3 @@
-
 import { Project, Experience, SkillGroup } from './types';
 
 export const ASSETS_URL = "https://raw.githubusercontent.com/ilmn25/ilmn25/refs/heads/prod/assets";
@@ -23,6 +22,14 @@ export const PERSONAL_INFO = {
     linkedin: 'https://www.linkedin.com/in/ilmn25/'
   }
 };
+
+export const PROJECT_NAV = [
+  { id: 'unity-game', label: '3D Unity Game', category: 'Game Dev' },
+  { id: 'tutor-db', label: 'Tutor Centre Management System', category: 'Web App' },
+  { id: 'discord-tool', label: 'Discord Message Tool', category: 'Cloud Tools' },
+  { id: 'spa-tree', label: 'SPA Specifications Generator', category: 'Automation' },
+  { id: 'illustrations', label: 'Digital Illustrations', category: 'Art' },
+];
 
 export const SKILLS: SkillGroup[] = [
   {
@@ -79,7 +86,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'discord-tool',
-    title: 'Automated Discord Message Tool',
+    title: 'Discord Message Tool',
     description: 'A cloud-native web app for streamlining job posts across many channels on Discord.',
     category: 'web',
     tags: ['FastAPI', 'React', 'AWS', 'Docker', 'MongoDB', 'Tailwind', 'GitHub Actions'],
