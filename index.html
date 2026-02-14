@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>illu</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ilmn25/ilmn25/refs/heads/prod/assets/icon.png" />
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ilmn25/ilmn25/refs/heads/prod/icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,7 +36,40 @@
         background-color: #f1f5f9; /* Slate-100 */
         color: #0f172a; /* Slate-900 */
       }
+
+      /* Custom Animations */
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes zoomInSoft {
+        from {
+          opacity: 0;
+          transform: scale(0.92);
+          filter: blur(8px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+          filter: blur(0px);
+        }
+      }
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(2rem); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.4s ease-out both;
+      }
+      .animate-zoom-in-soft {
+        animation: zoomInSoft 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .animate-slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
     </style>
+<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>
