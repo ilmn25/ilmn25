@@ -74,9 +74,7 @@ export const PROJECTS: Project[] = [
       'runs at 300 fps on a mid-tier laptop'
     ],
     links: [
-      { label: 'Source Code', url: 'https://github.com/ilmn25/240809' },
-      { label: 'Download (Windows)', url: 'https://github.com/ilmn25/240809/releases/download/v0.1.0/Game.zip' },
-      { label: 'Demo Video', url: 'https://youtu.be/otRVF7d-Z7Q' }
+      { label: 'GitHub Repo', url: 'https://github.com/ilmn25/240809' },
     ]
   },
   {
@@ -92,7 +90,7 @@ export const PROJECTS: Project[] = [
       'Multilingual UI localization'
     ],
     links: [
-      { label: 'Source Code', url: 'https://github.com/ilmn25/251128' }
+      { label: 'GitHub Repo', url: 'https://github.com/ilmn25/251128' }
     ]
   },
   {
@@ -123,7 +121,6 @@ export const PROJECTS: Project[] = [
       'used by a tutor centre in Hung Hom'
     ],
     links: [
-      { label: 'Website', url: 'https://ilmn25.github.io/260131-web/#/' }
     ]
   },
   {
@@ -147,11 +144,11 @@ export const PROJECTS: Project[] = [
 export const EXPERIENCES: Experience[] = [
   {
     company: 'Time Super English Tutor Centre',
-    role: 'Full Stack Webapp Developer',
+    role: 'Full Stack Developer',
     period: 'Jan 2026 - Present',
     type: 'Part-time',
     description: [
-      'Sole developer of a custom attendance and bookings web app for the centre, built with Supabase/PostgreSQL backend and Vite React + Tailwind frontend.',
+      'Sole developer of a custom ERP and CRM system for the centre, built with Supabase/PostgreSQL backend and Vite React + Tailwind frontend.',
       'Iterated features through direct collaboration with staff and owner to match their workflows and design.',
       'Features including localization, multi-tenancy, a dashboard for parents, extremely robust filtering and sorting, batch importing bookings data from excel, database snapshots and rollback, and more.'
     ]

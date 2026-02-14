@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,6 +37,38 @@
         background-color: #f1f5f9; /* Slate-100 */
         color: #0f172a; /* Slate-900 */
       }
+
+      /* Custom Animations */
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes zoomInSoft {
+        from { 
+          opacity: 0; 
+          transform: scale(0.92); 
+          filter: blur(8px);
+        }
+        to { 
+          opacity: 1; 
+          transform: scale(1); 
+          filter: blur(0px);
+        }
+      }
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(2rem); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.4s ease-out both;
+      }
+      .animate-zoom-in-soft {
+        animation: zoomInSoft 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .animate-slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
     </style>
   <script type="importmap">
 {
@@ -43,12 +76,14 @@
     "react/": "https://esm.sh/react@^19.2.4/",
     "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "lucide-react": "https://esm.sh/lucide-react@0.460.0"
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>
-  </body>
+  <script type="module" src="/index.tsx"></script>
+</body>
 </html>
