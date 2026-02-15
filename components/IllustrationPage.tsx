@@ -126,11 +126,11 @@ const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) => {
             </div>
           </div>
 
-          <header className="mb-16">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
+          <header className="mb-10">
+            <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-2 tracking-tight">
               {activeCategory === 'colored' ? 'Digital Illustration' : 'Sketches'}
             </h1> 
-            <p className="text-slate-500 font-mono text-sm uppercase tracking-widest">
+            <p className="text-slate-500 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em]">
               Sketches, Illustrations & Commissions
             </p>
           </header>

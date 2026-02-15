@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Github, Server, ZoomIn, X, Play } from 'lucide-react';
 import { DISCORD_HIGHLIGHTS, DISCORD_GALLERY, DISCORD_STRUCTURED_STACK } from '../data/discordTool';
