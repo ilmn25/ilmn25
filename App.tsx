@@ -1,8 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from './components/Navbar';
 import ProjectCard from './components/ProjectCard';
-import ContactModal from './components/ContactModal';
 import IllustrationPage from './components/IllustrationPage';
 import UnityProjectPage from './components/UnityProjectPage';
 import TutorProjectPage from './components/TutorProjectPage';
@@ -26,76 +25,161 @@ import {
 
 type PortfolioView = 'portfolio' | 'illustrations' | 'unity-game' | 'tutor-db' | 'discord-tool' | 'spa-tree';
 
+// Dynamically determine the base path for GitHub Pages vs Local/Root hosting
+const BASE_PATH = window.location.pathname.startsWith('/ilmn25') ? '/ilmn25' : '';
+
 const App: React.FC = () => {
-  const [isContactModalOpen, setContactModalOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [view, setView] = useState<PortfolioView>('portfolio');
+  const scrollTimeoutRef = useRef<number | null>(null);
 
-  const heroBtnClass = "w-64 px-8 py-3 bg-slate-900 hover:bg-black text-white rounded-full font-bold transition-all duration-200 transform hover:scale-105 active:scale-95 hover:-translate-y-0.5 shadow-lg shadow-slate-200 text-center block cursor-pointer outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2";
   const socialIconClass = "relative p-3 bg-white hover:bg-slate-50 rounded-full transition-all duration-200 border border-slate-200 text-slate-900 hover:shadow-md active:scale-95 group";
+
+  /**
+   * Safe navigation wrapper to handle environments where pushState is blocked (e.g., blob: origins)
+   */
+  const navigate = useCallback((path: string, targetView: PortfolioView = 'portfolio') => {
+    try {
+      // In some environments (like preview sandboxes), origin-changing pushState throws.
+      // We wrap it to ensure the state-based navigation still works even if the URL doesn't update.
+      window.history.pushState(null, '', path);
+    } catch (err) {
+      // Fail silently - the 'view' state will still handle the UI transition.
+    }
+    setView(targetView);
+  }, []);
+
+  const getCleanPath = useCallback(() => {
+    const fullPath = window.location.pathname;
+    let path = fullPath;
+    
+    // Remove BASE_PATH prefix if it exists
+    if (BASE_PATH && fullPath.startsWith(BASE_PATH)) {
+      path = fullPath.substring(BASE_PATH.length);
+    }
+    
+    // Clean up slashes and hash if any
+    return path.replace(/^\//, '').split('#')[0];
+  }, []);
+
+  const handleRouting = useCallback(() => {
+    const path = getCleanPath();
+    
+    // Project Route Mapping
+    const projectPages: Record<string, PortfolioView> = {
+      'illustrations': 'illustrations',
+      'digital-art': 'illustrations',
+      'unity-game': 'unity-game',
+      'tutor-db': 'tutor-db',
+      'discord-tool': 'discord-tool',
+      'spa-tree': 'spa-tree',
+      'ai-studio-migration-workflow': 'spa-tree'
+    };
+
+    // Section Route List
+    const sections = ['hero', 'skills', 'experience', 'projects'];
+
+    if (projectPages[path]) {
+      setView(projectPages[path]);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    } else {
+      setView('portfolio');
+      
+      // Handle scrolling to sections
+      const targetId = sections.includes(path) ? path : (path === '' || !path ? 'hero' : null);
+      
+      if (targetId) {
+        if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+        
+        scrollTimeoutRef.current = window.setTimeout(() => {
+          const element = document.getElementById(targetId);
+          if (element) {
+            const offset = 80;
+            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - offset;
+            window.scrollTo({ 
+              top: targetId === 'hero' ? 0 : offsetPosition, 
+              behavior: 'smooth' 
+            });
+          }
+        }, 150);
+      }
+    }
+  }, [getCleanPath]);
+
+  // Initial path sync
+  useEffect(() => {
+    const path = getCleanPath();
+    const projectPages: Record<string, PortfolioView> = {
+      'illustrations': 'illustrations',
+      'digital-art': 'illustrations',
+      'unity-game': 'unity-game',
+      'tutor-db': 'tutor-db',
+      'discord-tool': 'discord-tool',
+      'spa-tree': 'spa-tree',
+      'ai-studio-migration-workflow': 'spa-tree'
+    };
+    if (projectPages[path]) {
+      setView(projectPages[path]);
+    }
+  }, [getCleanPath]);
+
+  // Handle routing when preloader finishes or popstate occurs
+  useEffect(() => {
+    if (isLoaded) {
+      handleRouting();
+    }
+    window.addEventListener('popstate', handleRouting);
+    return () => {
+      window.removeEventListener('popstate', handleRouting);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, [isLoaded, handleRouting]);
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
-    if (view !== 'portfolio') {
-      setView('portfolio');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
-        }
-      }, 100);
-      return;
-    }
-
-    const target = e.currentTarget;
-    const element = document.getElementById(id);
+    const cleanId = id === 'hero' ? '' : id;
+    const newPath = `${BASE_PATH}/${cleanId}`;
     
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      
-      window.history.pushState(null, '', `#${id}`);
-      target.blur();
-    }
+    navigate(newPath, 'portfolio');
+    
+    // Trigger scroll logic
+    setTimeout(handleRouting, 0);
+    
+    if (e.currentTarget) e.currentTarget.blur();
   };
 
   const handleProjectClick = (projectId: string) => {
-    if (projectId === 'digital-art' || projectId === 'illustrations') {
-      setView('illustrations');
-    } else if (projectId === 'unity-game') {
-      setView('unity-game');
-    } else if (projectId === 'tutor-db') {
-      setView('tutor-db');
-    } else if (projectId === 'discord-tool') {
-      setView('discord-tool');
-    } else if (projectId === 'ai-studio-migration-workflow' || projectId === 'spa-tree') {
-      setView('spa-tree');
-    }
+    const projectPages: Record<string, PortfolioView> = {
+      'illustrations': 'illustrations',
+      'digital-art': 'illustrations',
+      'unity-game': 'unity-game',
+      'tutor-db': 'tutor-db',
+      'discord-tool': 'discord-tool',
+      'spa-tree': 'spa-tree',
+      'ai-studio-migration-workflow': 'spa-tree'
+    };
+
+    const targetView = projectPages[projectId] || 'portfolio';
+    const newPath = `${BASE_PATH}/${projectId}`;
+    
+    navigate(newPath, targetView);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const renderView = () => {
+    const backAction = () => {
+      navigate(`${BASE_PATH}/`, 'portfolio');
+      setTimeout(handleRouting, 0);
+    };
+
     switch(view) {
-      case 'illustrations':
-        return <IllustrationPage onBack={() => setView('portfolio')} />;
-      case 'unity-game':
-        return <UnityProjectPage onBack={() => setView('portfolio')} />;
-      case 'tutor-db':
-        return <TutorProjectPage onBack={() => setView('portfolio')} />;
-      case 'discord-tool':
-        return <DiscordProjectPage onBack={() => setView('portfolio')} />;
-      case 'spa-tree':
-        return <SpaTreeProjectPage onBack={() => setView('portfolio')} />;
-      default:
-        return null;
+      case 'illustrations': return <IllustrationPage onBack={backAction} />;
+      case 'unity-game': return <UnityProjectPage onBack={backAction} />;
+      case 'tutor-db': return <TutorProjectPage onBack={backAction} />;
+      case 'discord-tool': return <DiscordProjectPage onBack={backAction} />;
+      case 'spa-tree': return <SpaTreeProjectPage onBack={backAction} />;
+      default: return null;
     }
   };
 
@@ -120,12 +204,11 @@ const App: React.FC = () => {
       <div className="min-h-screen text-slate-900 animate-fade-in">
         <Navbar 
           scrollToSection={scrollToSection} 
-          onContactClick={() => setContactModalOpen(true)} 
           onProjectClick={handleProjectClick}
+          basePath={BASE_PATH}
         />
         {renderView()}
-        <ContactModal isOpen={isContactModalOpen} onClose={() => setContactModalOpen(false)} />
-        <ScrollToTop />
+        <ScrollToTop className={view === 'illustrations' ? 'hidden md:block' : ''} />
         <footer className="py-12 border-t border-slate-200 bg-white">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <p className="text-slate-400 text-sm font-mono mt-8 leading-relaxed">
@@ -141,14 +224,13 @@ const App: React.FC = () => {
     <div className="min-h-screen text-slate-900 animate-fade-in">
       <Navbar 
         scrollToSection={scrollToSection} 
-        onContactClick={() => setContactModalOpen(true)} 
         onProjectClick={handleProjectClick}
+        basePath={BASE_PATH}
       />
       
       {/* Hero Section */}
       <header id="hero" className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100/30">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left Column: Personal Info */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="w-40 h-40 rounded-full mb-8 shadow-2xl shadow-slate-200 bg-slate-100 flex items-center justify-center overflow-hidden animate-zoom-in-soft">
               <img 
@@ -203,7 +285,6 @@ const App: React.FC = () => {
               </a>
             </div>
 
-            {/* Project Quick Nav Row */}
             <div className="hidden md:flex flex-col items-start gap-3 w-full animate-slide-up" style={{ animationDelay: '0.2s' }}>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1 ml-1">Projects</p>
               <div className="flex flex-wrap gap-3">
@@ -221,8 +302,6 @@ const App: React.FC = () => {
               </div>
             </div>
           </div>
-
-          {/* Right Column: Blank as stylistic choice */} 
         </div>
       </header>
 
@@ -313,10 +392,8 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      <ContactModal isOpen={isContactModalOpen} onClose={() => setContactModalOpen(false)} />
       <ScrollToTop />
 
-      {/* Footer */}
       <footer className="py-10 border-t border-slate-100 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-400 text-xs font-mono tracking-widest">

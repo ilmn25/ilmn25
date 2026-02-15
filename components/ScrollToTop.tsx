@@ -2,7 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronUp } from 'lucide-react';
 
-const ScrollToTop: React.FC = () => {
+// Added ScrollToTopProps interface to support optional className
+interface ScrollToTopProps {
+  className?: string;
+}
+
+const ScrollToTop: React.FC<ScrollToTopProps> = ({ className = '' }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   // Show button when page is scrolled down
@@ -29,7 +34,7 @@ const ScrollToTop: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-8 right-8 z-50">
+    <div className={`fixed bottom-8 right-8 z-50 ${className}`}>
       {isVisible && (
         <button
           onClick={scrollToTop}

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Database, Layout, Shield, FileSpreadsheet, ZoomIn, X } from 'lucide-react';
 import { TUTOR_FEATURES, TUTOR_GALLERY, TUTOR_HIGHLIGHTS } from '../data/tutorProject';

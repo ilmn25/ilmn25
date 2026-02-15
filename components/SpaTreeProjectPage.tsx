@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { ArrowLeft, FileJson, Layers, CheckCircle2, ExternalLink, FileCode } from 'lucide-react';
 import { WORKFLOW_STEPS, WORKFLOW_HIGHLIGHTS, CODE_EXAMPLES, PROJECT_LINKS } from '../data/spaTree';
@@ -41,7 +42,7 @@ const SpaTreeProjectPage: React.FC<SpaTreeProjectPageProps> = ({ onBack }) => {
 
         <header className="mb-10">
           <div className="flex items-center gap-4 mb-2"> 
-            <h1 className="text-2xl md:text-4xl font-semibold text-slate-900 tracking-tight">
+            <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
               SPA HTML Tree Specification Generator
             </h1>
             <span className="px-2.5 py-0.5 bg-slate-900 text-white text-[9px] font-medium rounded-full uppercase tracking-widest">Workflow</span>
