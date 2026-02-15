@@ -1,7 +1,6 @@
-
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Database, Layout, Shield, FileSpreadsheet, ZoomIn, X } from 'lucide-react';
-import { TUTOR_FEATURES, TUTOR_GALLERY, TUTOR_HIGHLIGHTS } from '../data/tutorProject';
+import { TUTOR_FEATURES, TUTOR_GALLERY, TUTOR_HIGHLIGHTS, TUTOR_GALLERY_GROUPS } from '../data/tutorProject';
 
 interface TutorProjectPageProps {
   onBack: () => void;
@@ -78,7 +77,7 @@ const TutorProjectPage: React.FC<TutorProjectPageProps> = ({ onBack }) => {
                     <img 
                       src={feature.image} 
                       alt={feature.title} 
-                      className="w-full h-full object-cover scale-125 group-hover:scale-[1.32] transition-transform duration-700"
+                      className="w-full h-full object-cover scale-110 group-hover:scale-125 transition-transform duration-700"
                     />
                   </div>
                   <div className="p-6">
@@ -97,24 +96,38 @@ const TutorProjectPage: React.FC<TutorProjectPageProps> = ({ onBack }) => {
             </div>
           </section>
 
-          {/* Infrastructure Gallery */}
+          {/* Infrastructure Gallery with Subsections */}
           <section className="mb-16 pb-10">
-            <h2 className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-3">
+            <h2 className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-400 mb-8 flex items-center gap-3">
               <span className="w-8 h-[1px] bg-slate-200"></span>
               System Gallery
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-4">
-              {TUTOR_GALLERY.map((img, i) => (
-                <div 
-                  key={i} 
-                  onClick={() => setSelectedImage(img)}
-                  className="relative aspect-video rounded-xl overflow-hidden cursor-zoom-in group border border-slate-100 shadow-sm"
-                >
-                  <img src={img} alt={`Gallery screenshot ${i + 1}`} className="w-full h-full object-cover scale-125 transition-transform duration-700 group-hover:scale-[1.38]" loading="lazy" />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="p-2 bg-white/90 backdrop-blur rounded-full shadow-lg scale-90 group-hover:scale-100 transition-transform">
-                      <ZoomIn className="w-3.5 h-3.5 text-slate-900" />
-                    </div>
+            
+            <div className="space-y-12">
+              {Object.entries(TUTOR_GALLERY_GROUPS).map(([sectionName, imageIndices]) => (
+                <div key={sectionName} className="space-y-4">
+                  <h3 className="text-xs font-bold text-slate-900 uppercase tracking-widest pl-3 border-l-2 border-slate-900">
+                    {sectionName}
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-4">
+                    {imageIndices.map((idx) => {
+                      const img = TUTOR_GALLERY[idx - 1];
+                      if (!img) return null;
+                      return (
+                        <div 
+                          key={idx} 
+                          onClick={() => setSelectedImage(img)}
+                          className="relative aspect-video rounded-xl overflow-hidden cursor-zoom-in group border border-slate-100 shadow-sm"
+                        >
+                          <img src={img} alt={`${sectionName} screenshot ${idx}`} className="w-full h-full object-cover scale-110 transition-transform duration-700 group-hover:scale-125" loading="lazy" />
+                          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <div className="p-2 bg-white/90 backdrop-blur rounded-full shadow-lg scale-90 group-hover:scale-100 transition-transform">
+                              <ZoomIn className="w-3.5 h-3.5 text-slate-900" />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               ))}

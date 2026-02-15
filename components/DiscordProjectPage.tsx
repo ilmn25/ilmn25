@@ -145,7 +145,7 @@ const DiscordProjectPage: React.FC<DiscordProjectPageProps> = ({ onBack }) => {
                   <img 
                     src={img} 
                     alt={`Gallery screenshot ${i + 1}`} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    className="w-full h-full object-cover scale-110 transition-transform duration-700 group-hover:scale-125" 
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
