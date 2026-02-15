@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { ILLUSTRATIONS } from '../data/illustrations';
 import { ArrowLeft, X, ZoomIn, Move, Sparkles, PenTool } from 'lucide-react';
 
@@ -9,17 +9,81 @@ interface IllustrationPageProps {
 
 type Category = 'colored' | 'sketches';
 
+const IllustrationItem: React.FC<{ 
+  src: string; 
+  index: number; 
+  category: string;
+  priority?: boolean;
+  onClick: (src: string) => void;
+}> = ({ src, index, category, priority, onClick }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <div 
+      onClick={() => isLoaded && onClick(src)}
+      className={`relative group overflow-hidden rounded-3xl bg-slate-50 border border-slate-100 transition-all duration-500 mb-8 ${isLoaded ? 'cursor-zoom-in hover:shadow-2xl hover:shadow-slate-200' : 'cursor-wait'}`}
+    >
+      {/* Loading Shimmer Overlay - Fixed aspect to prevent initial height jump */}
+      {!isLoaded && (
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-50 via-slate-100 to-slate-50 bg-[length:200%_100%] animate-[shimmer_2s_infinite] opacity-50 aspect-[3/4]" />
+      )}
+      
+      <img 
+        src={src} 
+        alt={`${category} ${index + 1}`}
+        onLoad={() => setIsLoaded(true)}
+        className={`w-full h-auto block object-cover transition-all duration-700 ease-out group-hover:scale-105 ${isLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'}`}
+        loading={priority ? "eager" : "lazy"}
+        // @ts-ignore - fetchpriority is a valid experimental attribute
+        fetchpriority={priority ? "high" : "low"}
+      />
+
+      {/* Zoom Overlay - only visible when loaded */}
+      {isLoaded && (
+        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="p-4 bg-white/90 backdrop-blur-md rounded-full scale-90 group-hover:scale-100 transition-transform duration-300 shadow-xl">
+            <ZoomIn className="w-6 h-6 text-slate-900" />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) => {
   const [activeCategory, setActiveCategory] = useState<Category>('colored');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [scale, setScale] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [columnCount, setColumnCount] = useState(3);
   const dragStart = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    const updateColumns = () => {
+      if (window.innerWidth < 768) setColumnCount(1);
+      else if (window.innerWidth < 1024) setColumnCount(2);
+      else setColumnCount(3);
+    };
+
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+    return () => window.removeEventListener('resize', updateColumns);
   }, []);
+
+  const images = useMemo(() => ILLUSTRATIONS[activeCategory], [activeCategory]);
+
+  // To ensure top-to-bottom discovery order (0, 1, 2 load first), 
+  // we distribute into columns based on modulo of column count.
+  const columns = useMemo(() => {
+    const cols: {src: string, originalIdx: number}[][] = Array.from({ length: columnCount }, () => []);
+    images.forEach((src, idx) => {
+      cols[idx % columnCount].push({ src, originalIdx: idx });
+    });
+    return cols;
+  }, [images, columnCount]);
 
   // Reset zoom when image changes or closes
   useEffect(() => {
@@ -84,10 +148,15 @@ const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) => {
     setIsDragging(false);
   };
 
-  const images = ILLUSTRATIONS[activeCategory];
-
   return (
     <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+      `}} />
+      
       <div className="min-h-screen bg-white pt-24 pb-20 px-4 md:px-8 animate-slide-up">
         <div className="max-w-[1800px] mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12">
@@ -135,24 +204,21 @@ const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) => {
             </p>
           </header>
 
-          <div key={activeCategory} className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 animate-fade-in">
-            {images.map((src, index) => (
-              <div 
-                key={`${activeCategory}-${index}`} 
-                onClick={() => setSelectedImage(src)}
-                className="relative group overflow-hidden rounded-3xl bg-slate-50 border border-slate-100 break-inside-avoid cursor-zoom-in hover:shadow-2xl hover:shadow-slate-200 transition-all duration-500"
-              >
-                <img 
-                  src={src} 
-                  alt={`${activeCategory} ${index + 1}`}
-                  className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="p-4 bg-white/90 backdrop-blur-md rounded-full scale-90 group-hover:scale-100 transition-transform duration-300 shadow-xl">
-                    <ZoomIn className="w-6 h-6 text-slate-900" />
-                  </div>
-                </div>
+          {/* Masonry-style flex columns */}
+          <div key={activeCategory} className="flex flex-row gap-8 animate-fade-in">
+            {columns.map((columnData, colIdx) => (
+              <div key={colIdx} className="flex-1 flex flex-col">
+                {columnData.map((item, imgIdx) => (
+                  <IllustrationItem 
+                    key={`${activeCategory}-${colIdx}-${imgIdx}`}
+                    src={item.src}
+                    index={item.originalIdx}
+                    category={activeCategory}
+                    // Priority for images in the initial viewport rows
+                    priority={item.originalIdx < (columnCount * 2)}
+                    onClick={setSelectedImage}
+                  />
+                ))}
               </div>
             ))}
           </div>

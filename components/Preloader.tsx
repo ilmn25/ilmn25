@@ -7,13 +7,8 @@ import { DISCORD_GALLERY } from '../data/discordTool';
 import { WORKFLOW_STEPS } from '../data/spaTree';
 import { PERSONAL_INFO } from '../constants';
 
-/** 
- * CONFIGURATION: 
- * LOADING_THRESHOLD: Percentage of total assets that must load to trigger "100%" visual progress.
- * MAX_LOADING_TIME: Maximum milliseconds to wait before forcing the app to open.
- */
-const LOADING_THRESHOLD = 15; 
-const MAX_LOADING_TIME = 4000; 
+const BOOT_DURATION = 1200; // Fast 1.2s "boot" animation
+const BATCH_SIZE = 3; // Conservative batching to avoid stuttering during browsing
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -25,109 +20,103 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const hasTriggeredComplete = useRef(false);
 
   useEffect(() => {
-    // Collect all image URLs from across the application data modules
-    const imageUrls = [
+    // 1. Gather all assets into a single background queue
+    const allAssets = [
       PERSONAL_INFO.avatar,
+      ...GAME_FEATURES.map(f => f.media.thumbnailUrl),
+      ...TUTOR_FEATURES.map(f => f.image),
+      ...WORKFLOW_STEPS.map(s => s.imageUrl),
       ...ILLUSTRATIONS.colored,
       ...ILLUSTRATIONS.sketches,
       ...GAME_GALLERY,
-      ...GAME_FEATURES.map(f => f.media.thumbnailUrl).filter(Boolean),
       ...TUTOR_GALLERY,
-      ...TUTOR_FEATURES.map(f => f.image),
       ...DISCORD_GALLERY,
-      ...WORKFLOW_STEPS.map(s => s.imageUrl).filter(Boolean),
     ].filter((url): url is string => typeof url === 'string');
 
-    const uniqueImages = Array.from(new Set(imageUrls));
-    const total = uniqueImages.length;
-    let loaded = 0;
+    const uniqueAssets = Array.from(new Set(allAssets));
+
+    // 2. Simulated fast "System Check" progress
+    const startTime = Date.now();
+    const timer = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const newProgress = Math.min(Math.round((elapsed / BOOT_DURATION) * 100), 100);
+      
+      setProgress(newProgress);
+
+      if (newProgress >= 100) {
+        clearInterval(timer);
+        triggerComplete();
+      }
+    }, 16);
 
     const triggerComplete = () => {
       if (hasTriggeredComplete.current) return;
       hasTriggeredComplete.current = true;
       
-      setProgress(100);
-      
-      // Brief delay for the user to see the "warming up" status reach 100%
       setTimeout(() => {
         setIsVisible(false);
-        // Wait for fade animation before calling onComplete to unmount
-        setTimeout(onComplete, 800);
-      }, 400);
+        setTimeout(onComplete, 600);
+      }, 200);
+
+      // Start the heavy lifting silently in the background AFTER the user has "entered"
+      startBackgroundLoading(uniqueAssets);
     };
 
-    // Safety timeout: If loading takes too long, just let the user in
-    const timeoutId = setTimeout(() => {
-      if (!hasTriggeredComplete.current) {
-        console.warn('Preloader timed out. Entering app...');
-        triggerComplete();
-      }
-    }, MAX_LOADING_TIME);
-
-    if (total === 0) {
-      triggerComplete();
-      clearTimeout(timeoutId);
-      return;
-    }
-
-    const updateProgress = () => {
-      if (hasTriggeredComplete.current) return;
+    const startBackgroundLoading = async (urls: string[]) => {
+      const queue = [...urls];
+      // Small delay to let the initial page render settle
+      await new Promise(r => setTimeout(r, 1000));
       
-      loaded++;
-      const realProgress = (loaded / total) * 100;
-      
-      // Scale displayed progress so LOADING_THRESHOLD real = 100% displayed
-      const displayedProgress = Math.min(Math.round((realProgress / LOADING_THRESHOLD) * 100), 99);
-      setProgress(displayedProgress);
-      
-      if (realProgress >= LOADING_THRESHOLD) {
-        clearTimeout(timeoutId);
-        triggerComplete();
+      while (queue.length > 0) {
+        const batch = queue.splice(0, BATCH_SIZE);
+        await Promise.all(batch.map(url => {
+          return new Promise((resolve) => {
+            const img = new Image();
+            img.src = url;
+            img.onload = resolve;
+            img.onerror = resolve; // Continue even on broken links
+          });
+        }));
+        // Breathe between batches to keep main thread smooth for user interactions
+        await new Promise(r => setTimeout(r, 300));
       }
     };
 
-    uniqueImages.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = updateProgress;
-      img.onerror = updateProgress; 
-    });
-
-    return () => clearTimeout(timeoutId);
+    return () => clearInterval(timer);
   }, [onComplete]);
 
   return (
-    <div className={`fixed inset-0 z-[10000] bg-white flex flex-col items-center justify-center transition-all duration-1000 ease-in-out ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-      <div className="flex flex-col items-center w-72 animate-fade-in">
-        <div className="mb-12 relative flex items-center justify-center">
-          <div className="absolute w-24 h-24 border-2 border-slate-100 rounded-full"></div>
+    <div className={`fixed inset-0 z-[10000] bg-white flex flex-col items-center justify-center transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+      <div className="flex flex-col items-center w-64">
+        <div className="mb-10 relative flex items-center justify-center">
+          <div className="absolute w-20 h-20 border border-slate-100 rounded-full"></div>
           <div 
-            className="absolute w-24 h-24 border-2 border-slate-900 rounded-full border-t-transparent animate-spin"
-            style={{ animationDuration: '1.2s' }}
+            className="absolute w-20 h-20 border border-slate-900 rounded-full border-t-transparent animate-spin"
+            style={{ animationDuration: '0.8s' }}
           ></div>
-          <span className="text-xl font-bold text-slate-900 font-mono tracking-tighter">
+          <span className="text-sm font-bold text-slate-900 font-mono tracking-tighter">
             {progress}%
           </span>
         </div>
         
-        <div className="w-full text-center space-y-4">
-          <h2 className="text-xs font-mono uppercase tracking-[0.4em] text-slate-900 font-bold">
-            initializing
+        <div className="w-full text-center space-y-3">
+          <h2 className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-900 font-bold">
+            {progress < 100 ? 'booting' : 'ready'}
           </h2>
           <div className="w-full bg-slate-50 h-[1px] rounded-full overflow-hidden">
             <div 
-              className="h-full bg-slate-900 transition-all duration-700 ease-out shadow-[0_0_10px_rgba(0,0,0,0.1)]" 
+              className="h-full bg-slate-900 transition-all duration-300 ease-out" 
               style={{ width: `${progress}%` }}
             ></div>
           </div>
-          <p className="text-[9px] font-mono text-slate-400 uppercase tracking-widest animate-pulse">
-            warming up assets
+          <p className="text-[8px] font-mono text-slate-300 uppercase tracking-widest">
+            {progress < 50 ? 'Initializing Environment' : 'Preparing Layout Engine'}
           </p>
         </div>
       </div>
       
-      <div className="absolute bottom-12 text-[10px] font-mono text-slate-300 uppercase tracking-[0.2em]">
-        illu's portfolio site
+      <div className="absolute bottom-10 text-[9px] font-mono text-slate-200 uppercase tracking-[0.3em]">
+        illu's portfolio v2
       </div>
     </div>
   );
