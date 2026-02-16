@@ -265,7 +265,7 @@ const App: React.FC = () => {
                         {renderView()}
                         <ScrollToTop className={view === 'illustrations' ? 'hidden md:block' : ''} />
                         <footer className="py-12 border-t border-slate-200 bg-white">
-                            <div className="max-w-7xl mx-auto px-4 text-center">
+                            <div className="max-w-6xl mx-auto px-8 md:px-12 lg:px-16 text-center">
                                 <p className="text-slate-400 text-sm font-mono mt-8 leading-relaxed">
                                     &copy; {new Date().getFullYear()} {PERSONAL_INFO.name}.
                                 </p>
@@ -274,8 +274,8 @@ const App: React.FC = () => {
                     </>
                 ) : (
                     <>
-                        <header id="hero" className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100/30">
-                            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <header id="hero" className="min-h-screen pt-24 pb-12 px-8 md:px-12 lg:px-16 flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100/30">
+                            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
                                     <RevealOnScroll direction="scale" delay={100}>
                                         <div className="w-40 h-40 rounded-full mb-8 shadow-2xl shadow-slate-200 bg-slate-100 flex items-center justify-center overflow-hidden">
@@ -362,7 +362,7 @@ const App: React.FC = () => {
                         </header>
 
                         <section id="skills" className="py-12 bg-slate-50 scroll-mt-20 overflow-hidden">
-                            <div className="max-w-7xl mx-auto px-4">
+                            <div className="max-w-6xl mx-auto px-8 md:px-12 lg:px-16">
                                 <RevealOnScroll direction="up" className="text-center mb-8 max-w-3xl mx-auto">
                                     <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">Skills</h2>
                                 </RevealOnScroll>
@@ -386,7 +386,7 @@ const App: React.FC = () => {
                         </section>
 
                         <section id="experience" className="py-12 bg-white scroll-mt-20 overflow-hidden">
-                            <div className="max-w-4xl mx-auto px-4">
+                            <div className="max-w-4xl mx-auto px-8 md:px-12 lg:px-16">
                                 <RevealOnScroll direction="up" className="text-center mb-12 max-w-3xl mx-auto">
                                     <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">Work Experience</h2>
                                 </RevealOnScroll>
@@ -426,8 +426,8 @@ const App: React.FC = () => {
                             </div>
                         </section>
 
-                        <section id="projects" className="py-12 px-4 scroll-mt-20 bg-slate-50/50 overflow-hidden">
-                            <div className="max-w-7xl mx-auto">
+                        <section id="projects" className="py-12 px-8 md:px-12 lg:px-16 scroll-mt-20 bg-slate-50/50 overflow-hidden">
+                            <div className="max-w-6xl mx-auto">
                                 <RevealOnScroll direction="up" className="text-center mb-8 max-w-3xl mx-auto">
                                     <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">Featured Projects</h2>
                                 </RevealOnScroll>
@@ -443,7 +443,7 @@ const App: React.FC = () => {
 
                         <ScrollToTop />
                         <footer className="py-10 border-t border-slate-100 bg-white">
-                            <div className="max-w-7xl mx-auto px-4 text-center">
+                            <div className="max-w-6xl mx-auto px-8 md:px-12 lg:px-16 text-center">
                                 <p className="text-slate-400 text-xs font-mono tracking-widest">
                                     &copy; {new Date().getFullYear()} {PERSONAL_INFO.name.toUpperCase()}
                                 </p>

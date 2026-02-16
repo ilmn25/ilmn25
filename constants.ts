@@ -44,7 +44,7 @@ export const SKILLS: SkillGroup[] = [
   },
   {
     category: 'Backend & Cloud',
-    skills: ['FastAPI', 'AWS (IAM, ECS, ECR, S3)', 'Supabase']
+    skills: ['FastAPI', 'AWS (IAM, ECS, ECR, S3)', 'Supabase', 'Stripe']
   },
   {
     category: 'Database',

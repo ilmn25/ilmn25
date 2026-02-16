@@ -29,8 +29,8 @@ const TutorProjectPage: React.FC<TutorProjectPageProps> = ({ onBack }) => {
 
     return (
         <>
-            <div className="min-h-screen bg-white pt-24 pb-20 px-4 md:px-8 overflow-hidden">
-                <div className="max-w-7xl mx-auto">
+            <div className="min-h-screen bg-white pt-24 pb-20 px-8 md:px-12 lg:px-16 overflow-hidden">
+                <div className="max-w-6xl mx-auto">
                     <button
                         onClick={onBack}
                         className="flex items-center gap-2 text-slate-500 hover:text-slate-900 font-bold mb-8 transition-all group shrink-0"
