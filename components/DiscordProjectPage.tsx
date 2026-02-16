@@ -58,7 +58,7 @@ const DiscordProjectPage: React.FC<DiscordProjectPageProps> = ({ onBack }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16 items-start">
             <div>
               <div className="flex items-center gap-4 mb-2">
-                <h1 className="text-2xl md:text-4xl font-semibold text-slate-900 tracking-tight">
+                <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
                   Discord Message Tool
                 </h1>
                 <span className="px-2.5 py-0.5 bg-slate-900 text-white text-[9px] font-medium rounded-full uppercase tracking-widest">Cloud Tools</span>
