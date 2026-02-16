@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { ILLUSTRATIONS } from '../data/illustrations';
-import { ArrowLeft, X, ZoomIn, Move, Sparkles, PenTool } from 'lucide-react';
+import { ArrowLeft, X, ZoomIn, Move, Sparkles, PenTool, Shuffle } from 'lucide-react';
 
 interface IllustrationPageProps {
   onBack: () => void;
@@ -52,6 +52,7 @@ const IllustrationItem: React.FC<{
 
 const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) => {
   const [activeCategory, setActiveCategory] = useState<Category>('colored');
+  const [shuffleKey, setShuffleKey] = useState(0); // Key to trigger re-shuffle
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [scale, setScale] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -73,7 +74,19 @@ const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) => {
     return () => window.removeEventListener('resize', updateColumns);
   }, []);
 
-  const images = useMemo(() => ILLUSTRATIONS[activeCategory], [activeCategory]);
+  // Fisher-Yates shuffle
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+
+  const images = useMemo(() => {
+    return shuffleArray(ILLUSTRATIONS[activeCategory]);
+  }, [activeCategory, shuffleKey]);
 
   // To ensure top-to-bottom discovery order (0, 1, 2 load first), 
   // we distribute into columns based on modulo of column count.
@@ -148,6 +161,10 @@ const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) => {
     setIsDragging(false);
   };
 
+  const handleShuffle = () => {
+    setShuffleKey(prev => prev + 1);
+  };
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: `
@@ -168,29 +185,40 @@ const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) => {
               Back to Portfolio
             </button>
 
-            {/* Category Switcher */}
-            <div className="flex bg-slate-100 p-1.5 rounded-2xl w-fit">
+            <div className="flex items-center gap-3">
+              {/* Category Switcher */}
+              <div className="flex bg-slate-100 p-1.5 rounded-2xl w-fit">
+                <button
+                  onClick={() => setActiveCategory('colored')}
+                  className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
+                    activeCategory === 'colored' 
+                      ? 'bg-white text-slate-900 shadow-sm' 
+                      : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                >
+                  <Sparkles className={`w-4 h-4 ${activeCategory === 'colored' ? 'text-slate-900' : 'text-slate-400'}`} />
+                  Colored
+                </button>
+                <button
+                  onClick={() => setActiveCategory('sketches')}
+                  className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
+                    activeCategory === 'sketches' 
+                      ? 'bg-white text-slate-900 shadow-sm' 
+                      : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                >
+                  <PenTool className={`w-4 h-4 ${activeCategory === 'sketches' ? 'text-slate-900' : 'text-slate-400'}`} />
+                  Sketches
+                </button>
+              </div>
+
+              {/* Shuffle Button */}
               <button
-                onClick={() => setActiveCategory('colored')}
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
-                  activeCategory === 'colored' 
-                    ? 'bg-white text-slate-900 shadow-sm' 
-                    : 'text-slate-500 hover:text-slate-700'
-                }`}
+                onClick={handleShuffle}
+                className="p-3 bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 rounded-2xl transition-all active:scale-95 group"
+                title="Shuffle Order"
               >
-                <Sparkles className={`w-4 h-4 ${activeCategory === 'colored' ? 'text-slate-900' : 'text-slate-400'}`} />
-                Colored
-              </button>
-              <button
-                onClick={() => setActiveCategory('sketches')}
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
-                  activeCategory === 'sketches' 
-                    ? 'bg-white text-slate-900 shadow-sm' 
-                    : 'text-slate-500 hover:text-slate-700'
-                }`}
-              >
-                <PenTool className={`w-4 h-4 ${activeCategory === 'sketches' ? 'text-slate-900' : 'text-slate-400'}`} />
-                Sketches
+                <Shuffle className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
               </button>
             </div>
           </div>
@@ -205,12 +233,12 @@ const IllustrationPage: React.FC<IllustrationPageProps> = ({ onBack }) => {
           </header>
 
           {/* Masonry-style flex columns */}
-          <div key={activeCategory} className="flex flex-row gap-8 animate-fade-in">
+          <div key={`${activeCategory}-${shuffleKey}`} className="flex flex-row gap-8 animate-fade-in">
             {columns.map((columnData, colIdx) => (
               <div key={colIdx} className="flex-1 flex flex-col">
                 {columnData.map((item, imgIdx) => (
                   <IllustrationItem 
-                    key={`${activeCategory}-${colIdx}-${imgIdx}`}
+                    key={`${activeCategory}-${shuffleKey}-${colIdx}-${imgIdx}`}
                     src={item.src}
                     index={item.originalIdx}
                     category={activeCategory}

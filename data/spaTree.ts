@@ -39,9 +39,9 @@ export const WORKFLOW_STEPS: WorkflowStep[] = [
 
 export const WORKFLOW_HIGHLIGHTS = [
   "Enables full migration of medium‑sized websites within a single day.",
-  "Achieves 99% route coverage.",
+  "Achieves 95% route coverage.",
   "Renames and reorganizes routing for improved clarity.",
-  "Unifies the assets folder and standardizes asset naming, which helps reset development slowdowns from technical debt."
+  "Unifies the assets folder and standardizes asset naming to improve the efficiency of future modifications."
 ];
 
 export const CODE_EXAMPLES = [
