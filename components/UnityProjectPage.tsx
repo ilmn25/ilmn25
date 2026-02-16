@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Code2, ExternalLink, Gamepad2, Layers, Cpu, Code, ZoomIn, X, Play, Video } from 'lucide-react';
+import { ArrowLeft, Code2, ExternalLink, Gamepad2, Layers, Cpu, Code, ZoomIn, Play, Video } from 'lucide-react';
 import { GAME_FEATURES, GAME_GALLERY, EXTRA_VIDEOS } from '../data/unityProject';
 import RevealOnScroll from './RevealOnScroll';
+import ImageViewer from './ImageViewer';
 
 interface UnityProjectPageProps {
   onBack: () => void;
@@ -218,25 +219,7 @@ const UnityProjectPage: React.FC<UnityProjectPageProps> = ({ onBack }) => {
         </div>
       </div>
 
-      {selectedImage && (
-        <div 
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 animate-fade-in"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button 
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-[110]"
-          >
-            <X className="w-5 h-5" />
-          </button>
-          <img 
-            src={selectedImage} 
-            alt="Full view" 
-            className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
+      <ImageViewer src={selectedImage} onClose={() => setSelectedImage(null)} />
     </>
   );
 };

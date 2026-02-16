@@ -5,7 +5,6 @@ import {
   Github, 
   Server, 
   ZoomIn, 
-  X, 
   Play, 
   Cloud, 
   Zap, 
@@ -15,6 +14,7 @@ import {
 } from 'lucide-react';
 import { DISCORD_HIGHLIGHTS, DISCORD_GALLERY, DISCORD_STRUCTURED_STACK, DISCORD_FEATURES } from '../data/discordTool';
 import RevealOnScroll from './RevealOnScroll';
+import ImageViewer from './ImageViewer';
 
 interface DiscordProjectPageProps {
   onBack: () => void;
@@ -173,7 +173,7 @@ const DiscordProjectPage: React.FC<DiscordProjectPageProps> = ({ onBack }) => {
                   delay={idx * 100}
                 >
                   <div className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 h-full">
-                    <div className="aspect-[21/9] overflow-hidden bg-slate-100">
+                    <div className="aspect-[21/9] overflow-hidden bg-slate-100 cursor-zoom-in" onClick={() => setSelectedImage(feature.image)}>
                       <img 
                         src={feature.image} 
                         alt={feature.title} 
@@ -231,26 +231,7 @@ const DiscordProjectPage: React.FC<DiscordProjectPageProps> = ({ onBack }) => {
         </div>
       </div>
 
-      {/* Image Modal */}
-      {selectedImage && (
-        <div 
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 animate-fade-in"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button 
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-[110]"
-          >
-            <X className="w-5 h-5" />
-          </button>
-          <img 
-            src={selectedImage} 
-            alt="Full view" 
-            className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
+      <ImageViewer src={selectedImage} onClose={() => setSelectedImage(null)} />
     </>
   );
 };

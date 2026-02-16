@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Database, Layout, Shield, FileSpreadsheet, ZoomIn, X } from 'lucide-react';
+import { ArrowLeft, Database, Layout, Shield, FileSpreadsheet, ZoomIn } from 'lucide-react';
 import { TUTOR_FEATURES, TUTOR_GALLERY, TUTOR_HIGHLIGHTS, TUTOR_GALLERY_GROUPS } from '../data/tutorProject';
 import RevealOnScroll from './RevealOnScroll';
+import ImageViewer from './ImageViewer';
 
 interface TutorProjectPageProps {
   onBack: () => void;
@@ -60,7 +61,10 @@ const TutorProjectPage: React.FC<TutorProjectPageProps> = ({ onBack }) => {
 
           <RevealOnScroll direction="scale" delay={200}>
             <div className="mb-16">
-              <div className="aspect-video bg-slate-100 rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
+              <div 
+                onClick={() => setSelectedImage(TUTOR_GALLERY[17])}
+                className="aspect-video bg-slate-100 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 cursor-zoom-in"
+              >
                 <img 
                   src={TUTOR_GALLERY[17]} 
                   alt="Dashboard Preview" 
@@ -86,7 +90,7 @@ const TutorProjectPage: React.FC<TutorProjectPageProps> = ({ onBack }) => {
                   delay={idx * 50}
                 >
                   <div className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 h-full">
-                    <div className="aspect-[21/9] overflow-hidden bg-slate-100">
+                    <div className="aspect-[21/9] overflow-hidden bg-slate-100 cursor-zoom-in" onClick={() => setSelectedImage(feature.image)}>
                       <img 
                         src={feature.image} 
                         alt={feature.title} 
@@ -155,25 +159,7 @@ const TutorProjectPage: React.FC<TutorProjectPageProps> = ({ onBack }) => {
         </div>
       </div>
 
-      {selectedImage && (
-        <div 
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 animate-fade-in"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button 
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-[110]"
-          >
-            <X className="w-5 h-5" />
-          </button>
-          <img 
-            src={selectedImage} 
-            alt="Full view" 
-            className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
+      <ImageViewer src={selectedImage} onClose={() => setSelectedImage(null)} />
     </>
   );
 };
