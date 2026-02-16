@@ -19,8 +19,9 @@ export const PERSONAL_INFO = {
     github: 'https://github.com/ilmn25',
     twitter: 'https://x.com/ilmn25/',
     instagram: 'https://www.instagram.com/ilmnnnnnnnnnn/',
-    vgen: 'https://vgen.co/ilmn25/portfolio',
-    linkedin: 'https://www.linkedin.com/in/ilmn25/'
+    linkedin: 'https://www.linkedin.com/in/ilmn25/',
+    youtube: 'https://www.youtube.com/@ilmn25',
+    resume: 'https://docs.google.com/document/d/1EXzindBoId3J1ePtDNtXYuC0-K_bDDBOZi4cdc-akdk/edit?usp=sharing'
   }
 };
 
@@ -75,7 +76,7 @@ export const PROJECTS: Project[] = [
     category: 'game',
     tags: ['Unity', 'C#'],
     highlights: [
-      'A highly optimized spatial partitioning system that manages world data in 3D chunks, enabling infinite procedural world generation.', 
+      'A optimized map partitioning system that manages world data in 3D chunks, enabling infinite procedural world generation.', 
       "A custom-made set of DevTools for speeding up asset creation and systems testing.",
       "An Advanced Pathfind Algorithm and Navigation system, Designed for 3D Voxel Maps where Unity's NavMesh fails, Supporting Parkour Maneuvers.",
       "Integration with Unity's Job System and Burst Compiler to offload heavy computations, maintaining 200-300+ FPS on Average with no Frame Drops.",
@@ -101,7 +102,7 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: 'ai-studio-migration-workflow',
+    id: 'spa-tree',
     title: 'SPA HTML Tree Specification Generator',
     description: 'A prompt driven workflow to speed up the migration of legacy SPAs to AI-driven IDEs such as Google AI Studio.',
     category: 'workflow',
@@ -110,7 +111,7 @@ export const PROJECTS: Project[] = [
       'Processes SPA HTML trees to extract routes, page structure and asset information',
       'Employs LLMs to generate clear and comprehensive specifications.',
       'Facilitates the cleanup of asset names and paths for improved organization',
-      "Enables full migration of medium‑sized websites within a single day."
+      "Enables full migration of medium sized websites within a single day."
     ],
     links: [  
     ]
@@ -132,7 +133,7 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: 'digital-art',
+    id: 'illustrations',
     title: 'Digital Illustration',
     description: 'A collection of my illustrations, animations, and other art.',
     category: 'art',
@@ -151,7 +152,7 @@ export const PROJECTS: Project[] = [
 
 export const EXPERIENCES: Experience[] = [
   {
-    company: 'Time Super English Tutor Centre',
+    company: 'Time Super English Learning Centre',
     role: 'Full Stack Developer',
     period: 'Jan 2026 - Present',
     type: 'Part-time',
@@ -181,7 +182,7 @@ export const EXPERIENCES: Experience[] = [
     description: [
       'Reached potential clients on social media platforms such as Discord by posting and sharing my art portfolio.',
       'Drew concept sketches and character art tailored to client specifications.',
-      'Maintained clear communication with clients through iterative feedback cycles, and delivered projects within agreed timelines, ensuring satisfaction.'
+      'Maintained clear communication with clients through iterative feedback cycles, and delivered projects within agreed timelines.'
     ]
   }
 ];
