@@ -275,7 +275,7 @@ const App: React.FC = () => {
                 ) : (
                     <>
                         <header id="hero" className="min-h-screen pt-24 pb-12 px-8 md:px-12 lg:px-16 flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100/30">
-                            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div className="max-w-6xl mx-auto grid grid-cols-1 gap-12 items-center">
                                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
                                     <RevealOnScroll direction="scale" delay={100}>
                                         <div className="w-40 h-40 rounded-full mb-8 shadow-2xl shadow-slate-200 bg-slate-100 flex items-center justify-center overflow-hidden">

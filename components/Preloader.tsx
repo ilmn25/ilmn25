@@ -7,8 +7,8 @@ import { DISCORD_GALLERY } from '../data/discordTool';
 import { WORKFLOW_STEPS } from '../data/spaTree';
 import { PERSONAL_INFO } from '../constants';
 
-const BATCH_SIZE = 30; // Parallel load batches to balance speed and browser performance
-const MAX_LOAD_TIME = 7000; // 6 seconds time limit
+const BATCH_SIZE = 150; // Parallel load batches to balance speed and browser performance
+const MAX_LOAD_TIME = 1000; // 6 seconds time limit
 
 interface PreloaderProps {
   onComplete: () => void;
