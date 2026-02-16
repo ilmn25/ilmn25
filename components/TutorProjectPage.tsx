@@ -42,7 +42,7 @@ const TutorProjectPage: React.FC<TutorProjectPageProps> = ({ onBack }) => {
               <span className="px-2.5 py-0.5 bg-slate-900 text-white text-[9px] font-bold rounded-full uppercase tracking-widest">Web App</span>
             </div>
             <p className="text-slate-500 text-sm md:text-base max-w-2xl leading-relaxed mb-6">
-              A custom ERP and CRM solution built to streamline Attendance, Client communication, and Financial bookkeeping for education centers.
+              A custom ERP and CRM solution built to streamline Attendance, Client Communication, and Operations Management for education centers.
             </p>
             <div className="flex flex-wrap gap-x-6 gap-y-2">
               {TUTOR_HIGHLIGHTS.map((item, i) => (

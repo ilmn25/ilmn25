@@ -61,7 +61,7 @@ export const GAME_FEATURES: GameFeature[] = [
   },
   {
     title: "Custom Devtools",
-    description: "A comprehensive overview of the engine's capabilities, demonstrating real-time interactions and system stability.",
+    description: "A custom-made set of development tools for speeding up asset creation and testing.",
     media: {
       type: 'video',
       url: 'https://www.youtube.com/watch?v=Y2vqaBKJf1U',

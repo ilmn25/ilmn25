@@ -1,3 +1,4 @@
+
 import { Project, Experience, SkillGroup } from './types';
 
 export const ASSETS_URL = "https://raw.githubusercontent.com/ilmn25/ilmn25/refs/heads/prod/assets";
@@ -74,60 +75,60 @@ export const PROJECTS: Project[] = [
     category: 'game',
     tags: ['Unity', 'C#'],
     highlights: [
-      'Cubic map chunking system',
-      'State machine and behavior module system',
-      "Optimized real-time map generation using Unity's Job System",
-      'Robust 3D A* pathfinding algorithm with parkour',
-      'runs at 300 fps on a mid-tier laptop'
+      'A highly optimized spatial partitioning system that manages world data in 3D chunks, enabling infinite procedural world generation.', 
+      "A custom-made set of DevTools for speeding up asset creation and systems testing.",
+      "An Advanced Pathfind Algorithm and Navigation system, Designed for 3D Voxel Maps where Unity's NavMesh fails, Supporting Parkour Maneuvers.",
+      "Integration with Unity's Job System and Burst Compiler to offload heavy computations, maintaining 200-300+ FPS on Average with no Frame Drops.",
+      "Save and Load system that can maintain the World's Map, Inventory, all Entity Behaviours, and other Metadata."
     ],
     links: [
       { label: 'GitHub Repo', url: 'https://github.com/ilmn25/240809' },
     ]
   },
   {
+    id: 'tutor-db',
+    title: 'Tutor Centre Management System',
+    description: 'A custom ERP and CRM solution built to streamline Attendance, client communication, and operations management for education centers..',
+    category: 'web',
+    tags: ['Supabase', 'PostgreSQL', 'React', 'Tailwind'],
+    highlights: [ 
+      'Features issues detection, multi-tenancy, Stripe Payment API integration for parents to pay online, and more',
+      'Advanced data management with robust data filtering, sorting, backup, analysis, and also batch import / exporting',
+      'Automated attendance with fingerprint & facial recognition hardware integration',
+      'Used by a Tutor Centre in Hung Hom'
+    ],
+    links: [
+    ]
+  },
+  {
+    id: 'ai-studio-migration-workflow',
+    title: 'SPA HTML Tree Specification Generator',
+    description: 'A prompt driven workflow to speed up the migration of legacy SPAs to AI-driven IDEs such as Google AI Studio.',
+    category: 'workflow',
+    tags: ['Prompt Engineering', 'Specification Generation'],
+    highlights: [
+      'Processes SPA HTML trees to extract routes, page structure and asset information',
+      'Employs LLMs to generate clear and comprehensive specifications.',
+      'Facilitates the cleanup of asset names and paths for improved organization',
+      "Enables full migration of medium‑sized websites within a single day."
+    ],
+    links: [  
+    ]
+  },
+  {
     id: 'discord-tool',
     title: 'Discord Message Tool',
-    description: 'A cloud-native web app for streamlining job posts across many channels on Discord.',
+    description: 'A cloud-native web app to streamline posting messages across many channels on Discord.',
     category: 'web',
     tags: ['FastAPI', 'React', 'AWS', 'Docker', 'MongoDB', 'Tailwind', 'GitHub Actions'],
     highlights: [
       'Wrapper for Discord API',
       'Hosted on AWS ECS Fargate with Docker containerization',
       'Integrated CI/CD pipeline via GitHub Actions',
-      'Multilingual UI localization'
+      'Multilingual UI localization & device responsive UI'
     ],
     links: [
       { label: 'GitHub Repo', url: 'https://github.com/ilmn25/251128' }
-    ]
-  },
-  {
-    id: 'ai-studio-migration-workflow',
-    title: 'SPA HTML Tree Specification Generator',
-    description: 'A workflow tool that utilizes prompt engineering to analyze SPA HTML trees and output detailed website specifications for migration to Google AI Studio.',
-    category: 'workflow',
-    tags: ['Prompt Engineering', 'Specification Generation'],
-    highlights: [
-      'Processes SPA HTML trees to extract routes, page structure and asset details',
-      'Employs prompt engineering to generate clear, actionable specifications for migration',
-      'Facilitates the cleanup of asset names and paths for improved organization',
-      'Outputs a comprehensive specification document for easy migration into Google AI Studio'
-    ],
-    links: [  
-    ]
-  },
-  {
-    id: 'tutor-db',
-    title: 'Tutor Centre Management System',
-    description: 'A full-stack service web app, built to streamline attendance and bookings data handling for small tutor centres.',
-    category: 'web',
-    tags: ['Supabase', 'PostgreSQL', 'React', 'Tailwind'],
-    highlights: [
-      'Built with Supabase/PostgreSQL backend and Vite React + Tailwind frontend',
-      'Features localization, multi-tenancy, and an interactive dashboard for parents',
-      'Advanced data management: batch Excel importing, robust filtering and sorting, and database rollback systems',
-      'used by a tutor centre in Hung Hom'
-    ],
-    links: [
     ]
   },
   {
@@ -141,9 +142,9 @@ export const PROJECTS: Project[] = [
       'Managing personal social media and freelance commissions'
     ],
     links: [
-      { label: 'Twitter', url: 'https://x.com/ilmn25/' },
-      { label: 'VGen', url: 'https://vgen.co/ilmn25/portfolio' },
-      { label: 'Instagram', url: 'https://www.instagram.com/ilmnnnnnnnnnn/' }
+      { label: 'Twitter', url: 'https://x.com/ilmn25/' }, 
+      { label: 'Instagram', url: 'https://www.instagram.com/ilmnnnnnnnnnn/' },
+      { label: 'Youtube', url: 'https://www.youtube.com/@ilmn25' }
     ]
   }
 ];

@@ -58,14 +58,16 @@ export const TUTOR_FEATURES: ProjectFeature[] = [
 export const TUTOR_GALLERY = Array.from({ length: 32 }, (_, i) => `${TUTOR_BASE}/${i + 1}.png`);
 
 export const TUTOR_GALLERY_GROUPS: Record<string, number[]> = { 
-  "Admin Organization Members Dashboard": [1, 2, 3, 22],
+  "Home Page": [36, 37],
+  "Admin Member Dashboards": [1, 2, 3, 22],
   "Admin Attendance Dashboard": [18, 19, 20, 21],
   "Admin Course Schedules Editor": [4, 5, 6],
-  "Admin Data Import / Exporting": [7, 8, 9],
+  "Admin Data Import / Exporting / Rollback": [7, 8, 9, 33],
   "Admin Issues Dashboard": [11, 12, 13, 14], 
   "Admin Invoices Dashboard": [10, 15, 16, 17],
   "Parent Attendance Dashboard": [23, 24, 29],
   "Parent Issues Dashboard": [26, 27, 28],
   "Parent Invoices Payment Page": [25, 30],
+  "Screen Size Responive UI": [34, 35],
   "Supabase": [31, 32]
 };

@@ -1,7 +1,19 @@
 
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Github, Server, ZoomIn, X, Play } from 'lucide-react';
-import { DISCORD_HIGHLIGHTS, DISCORD_GALLERY, DISCORD_STRUCTURED_STACK } from '../data/discordTool';
+import { 
+  ArrowLeft, 
+  Github, 
+  Server, 
+  ZoomIn, 
+  X, 
+  Play, 
+  Cloud, 
+  Zap, 
+  Database, 
+  Languages, 
+  Layout 
+} from 'lucide-react';
+import { DISCORD_HIGHLIGHTS, DISCORD_GALLERY, DISCORD_STRUCTURED_STACK, DISCORD_FEATURES } from '../data/discordTool';
 
 interface DiscordProjectPageProps {
   onBack: () => void;
@@ -17,6 +29,18 @@ const DiscordProjectPage: React.FC<DiscordProjectPageProps> = ({ onBack }) => {
   const videoId = "F0IlZSnug6Q";
   const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
   const thumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
+  const getIcon = (type: string) => {
+    const props = { className: "w-4 h-4" };
+    switch (type) {
+      case 'cloud': return <Cloud {...props} />;
+      case 'zap': return <Zap {...props} />;
+      case 'database': return <Database {...props} />;
+      case 'languages': return <Languages {...props} />;
+      case 'layout': return <Layout {...props} />;
+      default: return <Server {...props} />;
+    }
+  };
 
   return (
     <>
@@ -112,7 +136,6 @@ const DiscordProjectPage: React.FC<DiscordProjectPageProps> = ({ onBack }) => {
                   className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700"
                 />
                 
-                {/* Play Button Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="p-5 bg-white/95 backdrop-blur-md rounded-full shadow-2xl scale-90 group-hover:scale-110 transition-transform duration-300">
                     <Play className="w-8 h-8 text-slate-900 fill-slate-900 ml-1" />
@@ -128,6 +151,38 @@ const DiscordProjectPage: React.FC<DiscordProjectPageProps> = ({ onBack }) => {
               </a>
             </div>
           </div>
+
+          {/* Technical Modules Section - Changed to 2 columns on large screens */}
+          <section className="mb-16">
+            <h2 className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-3">
+              <span className="w-8 h-[1px] bg-slate-200"></span>
+              Technical Modules
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {DISCORD_FEATURES.map((feature, idx) => (
+                <div key={idx} className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500">
+                  <div className="aspect-[21/9] overflow-hidden bg-slate-100">
+                    <img 
+                      src={feature.image} 
+                      alt={feature.title} 
+                      className="w-full h-full object-cover scale-110 group-hover:scale-125 transition-transform duration-700"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-slate-50 rounded-xl text-slate-900 group-hover:bg-slate-900 group-hover:text-white transition-colors">
+                        {getIcon(feature.iconType)}
+                      </div>
+                      <h3 className="text-base font-bold text-slate-900">{feature.title}</h3>
+                    </div>
+                    <p className="text-slate-500 text-xs leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
           {/* Gallery Section */}
           <section className="mb-16">
