@@ -16,26 +16,45 @@
         background-color: #ffffff;
         color: #0f172a;
         scroll-behavior: smooth;
+        overflow-x: hidden;
+        /* Hide scrollbar for IE, Edge and Firefox */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
       }
+      
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
       .font-mono {
         font-family: 'JetBrains Mono', monospace;
       }
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #f8fafc;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #94a3b8; /* Slate-400 */
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #64748b; /* Slate-500 */
-      }
+      
       ::selection {
         background-color: #f1f5f9; /* Slate-100 */
         color: #0f172a; /* Slate-900 */
+      }
+
+      /* Base Reveal Logic */
+      .reveal-base {
+        opacity: 0;
+        filter: blur(10px);
+        transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                    opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                    filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform, opacity, filter;
+      }
+
+      .reveal-left { transform: translateX(-80px); }
+      .reveal-right { transform: translateX(80px); }
+      .reveal-up { transform: translateY(60px); }
+      .reveal-scale { transform: scale(0.92); }
+
+      .revealed {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+        filter: blur(0px);
       }
 
       /* Custom Animations */
@@ -43,31 +62,35 @@
         from { opacity: 0; }
         to { opacity: 1; }
       }
+
       @keyframes zoomInSoft {
         from { 
           opacity: 0; 
-          transform: scale(0.92); 
-          filter: blur(8px);
+          transform: scale(0.95) translateY(-10px); 
+          filter: blur(8px); 
         }
         to { 
           opacity: 1; 
-          transform: scale(1); 
-          filter: blur(0px);
+          transform: scale(1) translateY(0); 
+          filter: blur(0px); 
         }
       }
+
       @keyframes slideUp {
-        from { opacity: 0; transform: translateY(2rem); }
+        from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
       }
 
       .animate-fade-in {
         animation: fadeIn 0.4s ease-out both;
       }
+
       .animate-zoom-in-soft {
-        animation: zoomInSoft 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        animation: zoomInSoft 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
       }
+
       .animate-slide-up {
-        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
       }
     </style>
   <script type="importmap">

@@ -7,8 +7,8 @@ import { DISCORD_GALLERY } from '../data/discordTool';
 import { WORKFLOW_STEPS } from '../data/spaTree';
 import { PERSONAL_INFO } from '../constants';
 
-const BOOT_DURATION = 1200; // Fast 1.2s "boot" animation
-const BATCH_SIZE = 3; // Conservative batching to avoid stuttering during browsing
+const BATCH_SIZE = 16; // Parallel load batches to balance speed and browser performance
+const MAX_LOAD_TIME = 6000; // 6 seconds time limit
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -20,7 +20,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const hasTriggeredComplete = useRef(false);
 
   useEffect(() => {
-    // 1. Gather all assets into a single background queue
+    // 1. Gather all assets that MUST be loaded before showing the page
     const allAssets = [
       PERSONAL_INFO.avatar,
       ...GAME_FEATURES.map(f => f.media.thumbnailUrl),
@@ -34,55 +34,72 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     ].filter((url): url is string => typeof url === 'string');
 
     const uniqueAssets = Array.from(new Set(allAssets));
-
-    // 2. Simulated fast "System Check" progress
-    const startTime = Date.now();
-    const timer = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const newProgress = Math.min(Math.round((elapsed / BOOT_DURATION) * 100), 100);
-      
-      setProgress(newProgress);
-
-      if (newProgress >= 100) {
-        clearInterval(timer);
-        triggerComplete();
-      }
-    }, 16);
+    const totalAssets = uniqueAssets.length;
+    let loadedCount = 0;
 
     const triggerComplete = () => {
       if (hasTriggeredComplete.current) return;
       hasTriggeredComplete.current = true;
       
+      setProgress(100);
+      
+      // Small visual buffer so the user sees 100% for a moment
       setTimeout(() => {
         setIsVisible(false);
         setTimeout(onComplete, 600);
-      }, 200);
-
-      // Start the heavy lifting silently in the background AFTER the user has "entered"
-      startBackgroundLoading(uniqueAssets);
+      }, 800);
     };
 
-    const startBackgroundLoading = async (urls: string[]) => {
-      const queue = [...urls];
-      // Small delay to let the initial page render settle
-      await new Promise(r => setTimeout(r, 1000));
+    // 6-second safety timeout
+    const timeoutId = setTimeout(() => {
+      if (!hasTriggeredComplete.current) {
+        console.warn('Preloader: Asset loading timed out after 6 seconds. Proceeding to app.');
+        triggerComplete();
+      }
+    }, MAX_LOAD_TIME);
+
+    const loadAssets = async () => {
+      if (totalAssets === 0) {
+        triggerComplete();
+        return;
+      }
+
+      const queue = [...uniqueAssets];
       
-      while (queue.length > 0) {
+      // Process in batches to prevent browser lock-up and maximize throughput
+      while (queue.length > 0 && !hasTriggeredComplete.current) {
         const batch = queue.splice(0, BATCH_SIZE);
         await Promise.all(batch.map(url => {
           return new Promise((resolve) => {
             const img = new Image();
             img.src = url;
-            img.onload = resolve;
-            img.onerror = resolve; // Continue even on broken links
+            
+            const handleLoad = () => {
+              loadedCount++;
+              if (!hasTriggeredComplete.current) {
+                const currentProgress = Math.round((loadedCount / totalAssets) * 100);
+                // Don't set progress to 100 here to let triggerComplete handle final state
+                setProgress(Math.min(currentProgress, 99));
+              }
+              resolve(null);
+            };
+
+            img.onload = handleLoad;
+            img.onerror = handleLoad; // Continue even if an image fails to load
           });
         }));
-        // Breathe between batches to keep main thread smooth for user interactions
-        await new Promise(r => setTimeout(r, 300));
+
+        // Safety check: if all are loaded
+        if (loadedCount >= totalAssets) {
+          triggerComplete();
+          break;
+        }
       }
     };
 
-    return () => clearInterval(timer);
+    loadAssets();
+
+    return () => clearTimeout(timeoutId);
   }, [onComplete]);
 
   return (
@@ -100,8 +117,8 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         </div>
         
         <div className="w-full text-center space-y-3">
-          <h2 className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-900 font-bold">
-            {progress < 100 ? 'booting' : 'ready'}
+          <h2 className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-900 font-bold transition-all duration-300">
+            {progress < 100 ? 'Initializing' : 'Ready'}
           </h2>
           <div className="w-full bg-slate-50 h-[1px] rounded-full overflow-hidden">
             <div 
@@ -110,13 +127,13 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
             ></div>
           </div>
           <p className="text-[8px] font-mono text-slate-300 uppercase tracking-widest">
-            {progress < 50 ? 'Initializing Environment' : 'Preparing Layout Engine'}
+            {progress < 100 ? 'Warming Up Assets' : 'Loading Page'}
           </p>
         </div>
       </div>
       
       <div className="absolute bottom-10 text-[9px] font-mono text-slate-200 uppercase tracking-[0.3em]">
-        illu's portfolio v2
+        illu's portfolio
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   ChevronDown, 
@@ -18,7 +17,7 @@ import {
 import { PROJECT_NAV, PERSONAL_INFO } from '../constants';
 
 interface NavbarProps {
-  scrollToSection: (e: React.MouseEvent<HTMLAnchorElement>, id: string) => void;
+  scrollToSection: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, id: string) => void;
   onProjectClick: (id: string) => void;
   basePath: string;
 }
@@ -27,10 +26,19 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, onProjectClick, basePa
   const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
   const [isContactDropdownOpen, setIsContactDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [copiedType, setCopiedType] = useState<string | null>(null);
   
   const projectRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -66,8 +74,8 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, onProjectClick, basePa
 
   return (
     <>
-      {/* Desktop Navbar */}
-      <nav className="hidden md:block absolute top-0 w-full z-50 bg-white/50 backdrop-blur-sm border-b border-slate-100/50">
+      {/* Desktop Navbar - Changed to Fixed */}
+      <nav className={`hidden md:block fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm py-0' : 'bg-transparent py-2'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex-shrink-0">
@@ -80,18 +88,18 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, onProjectClick, basePa
               </a>
             </div>
 
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-2">
               <a 
                 href="#/skills" 
                 onClick={(e) => scrollToSection(e, 'skills')} 
-                className="text-slate-600 hover:text-slate-900 px-4 py-2 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+                className="text-slate-600 hover:text-slate-900 px-4 py-2 text-sm font-semibold transition-all duration-200 rounded-xl hover:bg-slate-50 active:scale-95"
               >
                 Skills
               </a>
               <a 
                 href="#/experience" 
                 onClick={(e) => scrollToSection(e, 'experience')} 
-                className="text-slate-600 hover:text-slate-900 px-4 py-2 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+                className="text-slate-600 hover:text-slate-900 px-4 py-2 text-sm font-semibold transition-all duration-200 rounded-xl hover:bg-slate-50 active:scale-95"
               >
                 Experience
               </a>
@@ -103,8 +111,11 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, onProjectClick, basePa
                 onMouseLeave={() => setIsProjectDropdownOpen(false)}
               >
                 <button
-                  onClick={() => setIsProjectDropdownOpen(!isProjectDropdownOpen)}
-                  className="flex items-center gap-1 text-slate-600 hover:text-slate-900 px-4 py-2 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+                  onClick={(e) => {
+                    scrollToSection(e, 'projects');
+                    setIsProjectDropdownOpen(false);
+                  }}
+                  className="flex items-center gap-1 text-slate-600 hover:text-slate-900 px-4 py-2 text-sm font-semibold transition-all duration-200 rounded-xl hover:bg-slate-50 active:scale-95"
                 >
                   Projects
                   <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isProjectDropdownOpen ? 'rotate-180' : ''}`} />
@@ -113,8 +124,17 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, onProjectClick, basePa
                 {isProjectDropdownOpen && (
                   <div className="absolute top-full right-0 w-72 pt-2 animate-fade-in z-50">
                     <div className="bg-white border border-slate-100 rounded-2xl shadow-2xl shadow-slate-200/50 py-2 overflow-hidden">
-                      <div className="px-4 py-2 mb-1">
+                      <div className="px-4 py-2 mb-1 flex justify-between items-center">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Case Studies</p>
+                        <button 
+                          onClick={(e) => {
+                            scrollToSection(e, 'projects');
+                            setIsProjectDropdownOpen(false);
+                          }}
+                          className="text-[9px] font-bold text-slate-900 hover:underline px-1"
+                        >
+                          View All
+                        </button>
                       </div>
                       {PROJECT_NAV.map((link) => (
                         <button
@@ -147,7 +167,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, onProjectClick, basePa
               >
                 <button
                   onClick={() => setIsContactDropdownOpen(!isContactDropdownOpen)}
-                  className="bg-slate-900 hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 shadow-lg shadow-slate-200 hover:scale-105 active:scale-95 hover:-translate-y-0.5 flex items-center gap-2"
+                  className="bg-slate-900 hover:bg-black text-white ml-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 shadow-lg shadow-slate-200/40 hover:scale-105 active:scale-95 hover:-translate-y-0.5 flex items-center gap-2"
                 >
                   Contact
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
@@ -219,8 +239,8 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, onProjectClick, basePa
         </div>
       </nav>
 
-      {/* Mobile Navbar Logo Header */}
-      <div className="md:hidden absolute top-0 left-0 w-full h-16 flex items-center px-4 z-40 bg-white/50 backdrop-blur-sm border-b border-slate-100/50">
+      {/* Mobile Navbar Logo Header - Changed to Fixed */}
+      <div className={`md:hidden fixed top-0 left-0 w-full h-16 flex items-center px-4 z-40 transition-all duration-300 ${isScrolled ? 'bg-white/80 backdrop-blur-md border-b border-slate-200' : 'bg-transparent'}`}>
         <a 
           href="#/" 
           onClick={(e) => scrollToSection(e, 'hero')} 
@@ -230,90 +250,105 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, onProjectClick, basePa
         </a>
       </div>
 
-      {/* Mobile Menu Button */}
-      <div className="md:hidden fixed top-3 right-3 z-[60]">
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="w-10 h-10 flex items-center justify-center bg-slate-900 text-white rounded-xl shadow-lg active:scale-90 transition-all"
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-
+      {/* Mobile Menu Backdrop & Container */}
+      <div className="md:hidden">
         {isMobileMenuOpen && (
-          <div className="absolute top-12 right-0 mt-2 w-[85vw] max-w-[320px] bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden animate-zoom-in-soft max-h-[80vh] overflow-y-auto">
-            <div className="p-5 space-y-6">
-              <div className="space-y-3">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Projects</p>
-                <div className="space-y-2">
-                  {PROJECT_NAV.map((link) => (
-                    <button
-                      key={link.id}
-                      onClick={() => {
-                        onProjectClick(link.id);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="w-full flex items-center gap-3 p-2 bg-slate-50 rounded-xl active:bg-slate-100 transition-colors text-left"
-                    >
-                      <div className="p-1.5 rounded-lg bg-white text-slate-900 shadow-sm border border-slate-100">
-                        {getProjectIcon(link.id, "w-4 h-4")}
-                      </div>
-                      <div className="flex-1 overflow-hidden">
-                        <p className="text-xs font-bold text-slate-900 truncate">{link.label}</p>
-                        <p className="text-[8px] text-slate-400 uppercase tracking-tighter">{link.category}</p>
-                      </div>
-                      <ChevronRight className="w-3 h-3 text-slate-300" />
-                    </button>
-                  ))}
+          <div 
+            className="fixed inset-0 z-[55] bg-slate-900/10 backdrop-blur-sm animate-fade-in"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+        
+        <div className="fixed top-3 right-3 z-[60]">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="w-10 h-10 flex items-center justify-center bg-slate-900 text-white rounded-xl shadow-lg active:scale-90 transition-all hover:bg-black"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-5 h-5 animate-fade-in" />
+            ) : (
+              <Menu className="w-5 h-5 animate-fade-in" />
+            )}
+          </button>
+
+          {isMobileMenuOpen && (
+            <div className="absolute top-12 right-0 mt-2 w-[85vw] max-w-[320px] bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden animate-zoom-in-soft max-h-[80vh] overflow-y-auto">
+              <div className="p-5 space-y-6">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center px-1">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Projects</p> 
+                  </div>
+                  <div className="space-y-2">
+                    {PROJECT_NAV.map((link) => (
+                      <button
+                        key={link.id}
+                        onClick={() => {
+                          onProjectClick(link.id);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-3 p-2 bg-slate-50 rounded-xl active:bg-slate-100 transition-colors text-left"
+                      >
+                        <div className="p-1.5 rounded-lg bg-white text-slate-900 shadow-sm border border-slate-100">
+                          {getProjectIcon(link.id, "w-4 h-4")}
+                        </div>
+                        <div className="flex-1 overflow-hidden">
+                          <p className="text-xs font-bold text-slate-900 truncate">{link.label}</p>
+                          <p className="text-[8px] text-slate-400 uppercase tracking-tighter">{link.category}</p>
+                        </div>
+                        <ChevronRight className="w-3 h-3 text-slate-300" />
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-3">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Contact</p>
-                <div className="space-y-2">
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
-                    <div className="flex items-center gap-3 overflow-hidden">
-                      <Mail className="w-4 h-4 text-slate-400 shrink-0" />
-                      <p className="text-xs font-bold text-slate-900 truncate">{PERSONAL_INFO.contact.email}</p>
+                <div className="space-y-3">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Contact</p>
+                  <div className="space-y-2">
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                      <div className="flex items-center gap-3 overflow-hidden">
+                        <Mail className="w-4 h-4 text-slate-400 shrink-0" />
+                        <p className="text-xs font-bold text-slate-900 truncate">{PERSONAL_INFO.contact.email}</p>
+                      </div>
+                      <button onClick={() => handleCopy(PERSONAL_INFO.contact.email, 'email')} className="p-1.5 text-slate-400 active:scale-90 transition-all shrink-0">
+                        {copiedType === 'email' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                      </button>
                     </div>
-                    <button onClick={() => handleCopy(PERSONAL_INFO.contact.email, 'email')} className="p-1.5 text-slate-400 active:scale-90 transition-all shrink-0">
-                      {copiedType === 'email' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                    </button>
-                  </div>
-                  
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
-                    <div className="flex items-center gap-3 overflow-hidden">
-                      <MessageCircle className="w-4 h-4 text-slate-400 shrink-0" />
-                      <p className="text-xs font-bold text-slate-900 truncate">{PERSONAL_INFO.contact.whatsapp}</p>
+                    
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                      <div className="flex items-center gap-3 overflow-hidden">
+                        <MessageCircle className="w-4 h-4 text-slate-400 shrink-0" />
+                        <p className="text-xs font-bold text-slate-900 truncate">{PERSONAL_INFO.contact.whatsapp}</p>
+                      </div>
+                      <button onClick={() => handleCopy(PERSONAL_INFO.contact.whatsapp, 'whatsapp')} className="p-1.5 text-slate-400 active:scale-90 transition-all shrink-0">
+                        {copiedType === 'whatsapp' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                      </button>
                     </div>
-                    <button onClick={() => handleCopy(PERSONAL_INFO.contact.whatsapp, 'whatsapp')} className="p-1.5 text-slate-400 active:scale-90 transition-all shrink-0">
-                      {copiedType === 'whatsapp' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                    </button>
-                  </div>
 
-                  <div className="flex gap-2 pt-2 border-t border-slate-100 mt-2">
-                    <a
-                      href="https://mail.google.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 text-center py-2.5 text-[10px] font-bold text-slate-900 bg-slate-50 border border-slate-100 rounded-xl active:bg-slate-100 transition-colors"
-                    >
-                      Open Gmail
-                    </a>
-                    <a
-                      href="https://outlook.office.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 text-center py-2.5 text-[10px] font-bold text-slate-900 bg-slate-50 border border-slate-100 rounded-xl active:bg-slate-100 transition-colors"
-                    >
-                      Open Outlook
-                    </a>
+                    <div className="flex gap-2 pt-2 border-t border-slate-100 mt-2">
+                      <a
+                        href="https://mail.google.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 text-center py-2.5 text-[10px] font-bold text-slate-900 bg-slate-50 border border-slate-100 rounded-xl active:bg-slate-100 transition-colors"
+                      >
+                        Open Gmail
+                      </a>
+                      <a
+                        href="https://outlook.office.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 text-center py-2.5 text-[10px] font-bold text-slate-900 bg-slate-50 border border-slate-100 rounded-xl active:bg-slate-100 transition-colors"
+                      >
+                        Open Outlook
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );
