@@ -104,7 +104,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'spa-tree',
     title: 'SPA HTML Tree Specification Generator',
-    description: 'A prompt driven workflow to speed up the migration of legacy SPAs to AI-driven IDEs such as Google AI Studio.',
+    description: 'A prompt driven workflow to speed up the migration of legacy SPAs to AI-first IDEs such as Google AI Studio.',
     category: 'workflow',
     tags: ['Prompt Engineering', 'Specification Generation'],
     highlights: [
