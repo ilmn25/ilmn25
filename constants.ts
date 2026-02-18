@@ -34,38 +34,38 @@ export const PROJECT_NAV = [
 ];
 
 export const SKILLS: SkillGroup[] = [
-  {
-    category: 'Languages',
-    skills: ['Native English', 'Native Cantonese', 'Fluent Mandarin', 'Beginner Japanese']
-  },
-  {
-    category: 'Frontend',
-    skills: ['React', 'Vite', 'React Native', 'Tailwind']
-  },
-  {
-    category: 'Backend & Cloud',
-    skills: ['FastAPI', 'AWS (IAM, ECS, ECR, S3)', 'Supabase', 'Stripe']
-  },
-  {
-    category: 'Database',
-    skills: ['MongoDB', 'PostgreSQL']
-  },
-  {
-    category: 'DevOps',
-    skills: ['Docker', 'Github Actions', 'Git']
-  },
-  {
-    category: 'Game Dev',
-    skills: ['Unity', 'Godot', 'Defold', 'C#']
-  },
-  {
-    category: 'AI',
-    skills: ['RAG', 'Pinecone']
-  },
-  {
-    category: 'Graphics & Design',
-    skills: ['Clip Studio Paint', 'Figma', 'Canvas']
-  }
+    {
+        category: 'Languages',
+        skills: ['Native English', 'Native Cantonese', 'Fluent Mandarin', 'Beginner Japanese']
+    },
+    {
+        category: 'Frontend',
+        skills: ['React', 'React Native', 'Vite', 'Tailwind']
+    },
+    {
+        category: 'Backend & Full‑stack',
+        skills: ['Node.js', 'FastAPI', 'Next.js', 'MongoDB', 'PostgreSQL']
+    },
+    {
+        category: 'Cloud & Platforms',
+        skills: ['AWS (IAM, ECS, ECR, S3)', 'Supabase', 'Vercel', 'Stripe']
+    },
+    {
+        category: 'DevOps & VCS',
+        skills: ['Docker', 'GitHub Actions', 'Git']
+    },
+    {
+        category: 'Game Development',
+        skills: ['Unity', 'Godot', 'Defold']
+    },
+    {
+        category: 'AI & Tools',
+        skills: ['RAG', 'Pinecone', 'Google AI Studio']
+    },
+    {
+        category: 'Design & Graphics',
+        skills: ['Clip Studio Paint', 'Canva', 'Figma']
+    }
 ];
 
 export const PROJECTS: Project[] = [
