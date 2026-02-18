@@ -50,7 +50,7 @@ const SpaTreeProjectPage: React.FC<SpaTreeProjectPageProps> = ({ onBack }) => {
                             <span className="px-2.5 py-0.5 bg-slate-900 text-white text-[9px] font-medium rounded-full uppercase tracking-widest">Workflow</span>
                         </div>
                         <p className="text-slate-500 text-sm md:text-base max-w-2xl leading-relaxed">
-                            A prompt driven workflow to speed up the migration of legacy SPAs to AI-driven IDEs such as Google AI Studio.
+                            A prompt driven workflow to speed up the migration of legacy SPAs to AI-first IDEs such as Google AI Studio.
                         </p>
                     </header>
                 </RevealOnScroll>

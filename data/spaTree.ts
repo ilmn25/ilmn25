@@ -38,8 +38,8 @@ export const WORKFLOW_STEPS: WorkflowStep[] = [
 ];
 
 export const WORKFLOW_HIGHLIGHTS = [
-  "Enables full migration of medium‑sized websites within a single day.",
-  "Achieves 95% route coverage.",
+  "Enables full migration of medium‑sized websites in a single day.",
+  "Above 95% route coverage.",
   "Renames and reorganizes routing for improved clarity.",
   "Unifies the assets folder and standardizes asset naming to improve the efficiency of future modifications."
 ];

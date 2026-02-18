@@ -43,7 +43,7 @@ export const SKILLS: SkillGroup[] = [
         skills: ['React', 'React Native', 'Vite', 'Tailwind']
     },
     {
-        category: 'Backend & Full‑stack',
+        category: 'Backend & Full stack',
         skills: ['Node.js', 'FastAPI', 'Next.js', 'MongoDB', 'PostgreSQL']
     },
     {
