@@ -1,105 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>illu</title>
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ilmn25/ilmn25/refs/heads/prod/assets/icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-      html {
-        font-size: 90%;
-      }
-
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #ffffff;
-        color: #0f172a;
-        scroll-behavior: smooth;
-        overflow-x: hidden;
-        /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-      }
-
-      /* Hide scrollbar for Chrome, Safari and Opera */
-      ::-webkit-scrollbar {
-        display: none;
-      }
-
-      .font-mono {
-        font-family: 'JetBrains Mono', monospace;
-      }
-
-      ::selection {
-        background-color: #f1f5f9; /* Slate-100 */
-        color: #0f172a; /* Slate-900 */
-      }
-
-      /* Base Reveal Logic */
-      .reveal-base {
-        opacity: 0;
-        filter: blur(10px);
-        transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-                    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-                    filter 1s cubic-bezier(0.16, 1, 0.3, 1);
-        will-change: transform, opacity, filter;
-      }
-
-      .reveal-left { transform: translateX(-80px); }
-      .reveal-right { transform: translateX(80px); }
-      .reveal-up { transform: translateY(60px); }
-      .reveal-scale { transform: scale(0.92); }
-
-      .revealed {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-        filter: blur(0px);
-      }
-
-      /* Custom Animations */
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-
-      @keyframes zoomInSoft {
-        from { 
-          opacity: 0; 
-          transform: scale(0.95) translateY(-10px);
-          filter: blur(8px);
-        }
-        to { 
-          opacity: 1; 
-          transform: scale(1) translateY(0);
-          filter: blur(0px);
-        }
-      }
-
-      @keyframes slideUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      .animate-fade-in {
-        animation: fadeIn 0.4s ease-out both;
-      }
-
-      .animate-zoom-in-soft {
-        animation: zoomInSoft 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-      }
-
-      .animate-slide-up {
-        animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-      }
-    </style>
-<link rel="stylesheet" href="/index.css">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0;url=https://ilmn25.github.io/" />
+    <title>Redirecting...</title>
 </head>
-  <body>
-    <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+<body>
+    <p>If you are not redirected automatically, follow this <a href="https://ilmn25.github.io/">link</a>.</p>
 </body>
 </html>
